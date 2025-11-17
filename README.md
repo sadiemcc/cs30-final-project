@@ -1,2 +1,2 @@
 # cs30-final-project
-CS30 Major Project
+CS30 Final Project
