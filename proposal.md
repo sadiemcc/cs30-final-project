@@ -19,3 +19,4 @@
 - Sound effects
 - Ghosts/a spooky factor 
 - A storyline
+- When interacting with a shelf, go first person
