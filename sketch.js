@@ -1,10 +1,7 @@
-// Project Title
-// Your Name
-// Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// Grocery Store Game
 
+let x = 200;
+let y = 200;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -12,5 +9,21 @@ function setup() {
 
 function draw() {
   background(220);
-  circle(mouseX, mouseY, 35);
+  movement();
+}
+
+function movement(){
+  circle(x, y, 50);
+  if (keyIsDown("w")){
+    y--;
+  }
+  else if (keyIsDown("a")){
+    x--;
+  }
+  else if (keyIsDown("s")){
+    y++;
+  }
+  else if (keyIsDown("d")){
+    x++;
+  }
 }
