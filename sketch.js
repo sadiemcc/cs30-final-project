@@ -2,6 +2,7 @@
 
 let x = 200;
 let y = 200;
+let radius = 50;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -13,17 +14,21 @@ function draw() {
 }
 
 function movement(){
-  circle(x, y, 50);
-  if (keyIsDown("w")){
-    y--;
+  circle(x, y, radius);
+  //w
+  if (keyIsDown(87) && y > radius/2){
+    y -= 5;
   }
-  else if (keyIsDown("a")){
-    x--;
+  //a
+  else if (keyIsDown(65) && x > radius/2){
+    x -= 5;
   }
-  else if (keyIsDown("s")){
-    y++;
+  //s
+  else if (keyIsDown(83) && y < height-radius/2){
+    y += 5;
   }
-  else if (keyIsDown("d")){
-    x++;
+  //d
+  else if (keyIsDown(68) && x < width-radius/2){
+    x += 5;
   }
 }
