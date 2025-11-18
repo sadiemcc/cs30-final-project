@@ -3,6 +3,7 @@
 let x = 200;
 let y = 200;
 let radius = 50;
+let groceryList = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -20,15 +21,19 @@ function movement(){
     y -= 5;
   }
   //a
-  else if (keyIsDown(65) && x > radius/2){
+  if (keyIsDown(65) && x > radius/2){
     x -= 5;
   }
   //s
-  else if (keyIsDown(83) && y < height-radius/2){
+  if (keyIsDown(83) && y < height-radius/2){
     y += 5;
   }
   //d
-  else if (keyIsDown(68) && x < width-radius/2){
+  if (keyIsDown(68) && x < width-radius/2){
     x += 5;
+  }
+  if (keyIsDown(32)){
+    rectMode(CENTER);
+    rect(width/2, height/2, 400, 700);
   }
 }
