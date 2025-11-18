@@ -1,12 +1,17 @@
 // Grocery Store Game
 
+let gameState = "shopping";
 let x = 200;
 let y = 200;
 let radius = 50;
-let groceryList = [];
+let groceryListOptions = ['apples', 'bananas', 'oranges', 'cucumbers', 'potatoes', 'tomatoes', 'onions', 'bell peppers', 'lettuce', 'carrots', 'frozen pizza', 'ice cream', 'ground beef', 'sausages', 'fish', 'bacon', 'butter', 'cheese', 'eggs', 'milk', 'yogurt', 'cereal', 'cookies'];
+let chosenGroceryList = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  for (let n = 0; n < 5; n++){
+    randomGroceryList();
+  }
 }
 
 function draw() {
@@ -36,4 +41,12 @@ function movement(){
     rectMode(CENTER);
     rect(width/2, height/2, 400, 700);
   }
+}
+
+function randomGroceryList(){
+  let choices = random(groceryListOptions);
+  groceryListOptions.splice(choices, 1);
+  chosenGroceryList.push(choices);
+  
+  console.log(choices);
 }
