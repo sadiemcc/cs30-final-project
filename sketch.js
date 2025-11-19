@@ -6,12 +6,11 @@ let y = 200;
 let radius = 50;
 let groceryListOptions = ['apples', 'bananas', 'oranges', 'cucumbers', 'potatoes', 'tomatoes', 'onions', 'bell peppers', 'lettuce', 'carrots', 'frozen pizza', 'ice cream', 'ground beef', 'sausages', 'fish', 'bacon', 'butter', 'cheese', 'eggs', 'milk', 'yogurt', 'cereal', 'cookies'];
 let chosenGroceryList = [];
+let choices;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  for (let n = 0; n < 5; n++){
-    randomGroceryList();
-  }
+  randomGroceryList();
 }
 
 function draw() {
@@ -44,9 +43,10 @@ function movement(){
 }
 
 function randomGroceryList(){
-  let choices = random(groceryListOptions);
-  groceryListOptions.splice(choices, 1);
-  chosenGroceryList.push(choices);
-  
+  for (let n = 0; n < 5; n++){
+    let choices = random(groceryListOptions);
+    groceryListOptions.splice(choices, 1);
+    chosenGroceryList.push(choices);
+  }
   console.log(choices);
 }
