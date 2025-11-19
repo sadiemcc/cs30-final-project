@@ -18,6 +18,26 @@ function draw() {
   movement();
 }
 
+
+//randomizes what is on your grocery list
+function randomGroceryList(){
+  for (let n = 0; n < 5; n++){
+    let randomChoice = random(groceryListOptions);
+    let choices = groceryListOptions.indexOf(randomChoice);
+    chosenGroceryList.push(groceryListOptions[randomChoice]);
+    groceryListOptions.splice(choices, 1);
+    console.log(randomChoice);
+  }
+}
+
+function wordsOnList(){
+  fill(0);
+  textAlign(CENTER);
+  textSize(50);
+  text("" + randomChoice[0], width/2, height/2);
+  fill(255);
+}
+
 function movement(){
   circle(x, y, radius);
   //w
@@ -39,14 +59,6 @@ function movement(){
   if (keyIsDown(32)){
     rectMode(CENTER);
     rect(width/2, height/2, 400, 700);
+    wordsOnList();
   }
-}
-
-function randomGroceryList(){
-  for (let n = 0; n < 5; n++){
-    let choices = indexOf(random(groceryListOptions));
-    groceryListOptions.splice(choices, 1);
-    chosenGroceryList.push(choices);
-  }
-  console.log(choices);
 }
