@@ -44,7 +44,7 @@ function movement(){
 
 function randomGroceryList(){
   for (let n = 0; n < 5; n++){
-    let choices = random(groceryListOptions);
+    let choices = indexOf(random(groceryListOptions));
     groceryListOptions.splice(choices, 1);
     chosenGroceryList.push(choices);
   }
