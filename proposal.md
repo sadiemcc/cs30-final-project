@@ -4,13 +4,13 @@
 - A simple grocery store shopping game
 
 ## Needs to Have
-- Movement 
+- ♥ Movement 
 - Store with shelving 
 - Front/back/sides player model
 - Interaction ability to grab items off shelves
 - Self dialog (talk to yourself)
-- Randomly generated grocery list
-- Ability to hold up grocery list
+- ♥ Randomly generated grocery list 
+- ♥ Ability to hold up grocery list 
 
 ## Nice to Have
 - Running and stamina 
