@@ -4,13 +4,26 @@ let gameState = "shopping";
 let x = 200;
 let y = 200;
 let radius = 50;
-let groceryListOptions = ['apples', 'bananas', 'oranges', 'cucumbers', 'potatoes', 'tomatoes', 'onions', 'bell peppers', 'lettuce', 'carrots', 'frozen pizza', 'ice cream', 'ground beef', 'sausages', 'fish', 'bacon', 'butter', 'cheese', 'eggs', 'milk', 'yogurt', 'cereal', 'cookies', 'pasta', 'chips', 'canned soup', 'flour', 'sugar'];
+let groceryListOptions = ['apples', 'bananas', 'oranges', 'cucumbers', 'potatoes', 'tomatoes', 'onions', 'bell peppers', 'lettuce', 'carrots', 'frozen pizza', 'ice cream', 'ground beef', 'sausages', 'fish', 'bacon', 'butter', 'cheese', 'eggs', 'milk', 'yogurt', 'cereal', 'cookies', 'pasta', 'chips', 'canned soup', 'flour', 'sugar', 'pizza pops', 'frozen veggies', 'frozen fruit'];
 let chosenGroceryList = [];
 let choices;
 let randomChoice;
-let lastSwitched = 0;
-let duration = 60000;
-let showDuration = 6000;
+let inventory = [];
+let meat = (251, 195, 188);
+let dairy = (249, 199, 132);
+let dryGoods = (255, 246, 204);
+let freezer = (226, 234, 252);
+let produce = (221, 229, 182);
+
+class Shelves{
+  constructor(x, y, rectWidth, rectHeight, department){
+    this.x = x;
+    this.y = y;
+    this.rectWidth = rectWidth;
+    this.rectHeight = rectHeight;
+    this.department = color;
+  }
+}
 
 class Player{
   constructor(x, y, radius){
@@ -24,47 +37,51 @@ class Player{
   }
 
   move(){
-    if (keyIsDown(87) && this.y > 100 + this.radius/2){
+    if (keyIsDown(87) && this.y > 100 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.y -= 5;
     }
     //a
-    if (keyIsDown(65) && this.x > 100 + this.radius/2){
+    if (keyIsDown(65) && this.x > 100 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.x -= 5;
     }
     //s
-    if (keyIsDown(83) && this.y < height-this.radius/2){
+    if (keyIsDown(83) && this.y < height-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.y += 5;
     }
     //d
-    if (keyIsDown(68) && this.x < width-this.radius/2){
+    if (keyIsDown(68) && this.x < width-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.x += 5;
     }
-    if (keyIsDown(32) && !keyIsDown(87) && !keyIsDown(65) && !keyIsDown(83) && !keyIsDown(68)){
+    if (keyIsDown(32)){
       rectMode(CENTER);
       rect(width/2, height/2, 400, 700);
       wordsOnList();
     }
-    if (this.x < 225 && this.y < 275){
-      fill(0);
-      textSize(100);
-      text("test", 100, 100);
-      textAlign(CENTER);
-      fill(255);
+    if (keyIsDown(70)){
+      viewCart();
     }
+    // if (this.x < 225 && this.y < 275){
+    //   textAlign(CORNER);
+    //   fill(0);
+    //   textSize(50);
+    //   text('press "e" to pick up', 250, 100);
+    //   textAlign(CENTER);
+    //   fill(255);
+    // }
   }
 }
-
-let person = new Player(200, 200, 25*2);
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   randomGroceryList();
 }
 
+let person = new Player(200, 200, 25*2);
+
 function draw() {
   background(220);
   shelving();
-  interactiveShelf();
+  // interactiveShelf();
   person.display();
   person.move();
 }
@@ -96,9 +113,25 @@ function wordsOnList(){
 
 function shelving(){
   rectMode(CORNER);
-  rect(0, 0, width, 100);
-  rect(0, 0, 100, height);
-  rect(300, 300, width-600, 150);
+  //pink-red shelves = meat
+  fill(251, 195, 188);
+  rect(0, 0, 100, 500);
+  //blue shelves = freezer
+  fill(226, 234, 252);
+  rect(0, 0, width, 75);
+  //orange shelves = dairy
+  fill(249, 199, 132);
+  rect(width-75, 0, 75, height);
+  //yellow shelves = dry goods
+  fill(255, 246, 204);
+  rect(300, 225, width-600, 100);
+  rect(300, 450, width-600, 100);
+  rect(300, 675, width-900, 100);
+  //green shelves = produce
+  fill(221, 229, 182);
+  rect(width-600, height-75, 600, 100);
+  rect(width-500, 675, 300, 100);
+  rect(width-75, 675, 75, height);
 }
 
 function interactiveShelf(){
@@ -108,4 +141,9 @@ function interactiveShelf(){
   fill(0, 255, 0, 15);
   rect(0, 100, 200, 150);
   fill(255);
+}
+
+function viewCart(){
+  rectMode(CENTER);
+  rect(width/2, height/2, 1000, 600);
 }
