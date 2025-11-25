@@ -4,7 +4,6 @@ let gameState = "shopping";
 let x = 200;
 let y = 200;
 let radius = 50;
-let groceryListOptions = ['apples', 'bananas', 'oranges', 'cucumbers', 'potatoes', 'tomatoes', 'onions', 'bell peppers', 'lettuce', 'carrots', 'frozen pizza', 'ice cream', 'ground beef', 'sausages', 'fish', 'bacon', 'butter', 'cheese', 'eggs', 'milk', 'yogurt', 'cereal', 'cookies', 'pasta', 'chips', 'soup', 'flour', 'sugar', 'pizza pops', 'frozen veggies', 'frozen fruit', 'ground pork'];
 let departments = {
   produce: ["apples", "bananas", "oranges", "cucumbers", "potatoes", "tomatoes", "onions", "bell peppers", "lettuce", "carrots"],
   freezer: ["frozen pizza", "ice cream", "pizza pops", "frozen veggies", "frozen fruit"],
@@ -22,7 +21,6 @@ let dryGoods = (255, 246, 204);
 let freezer = (226, 234, 252);
 let produce = (221, 229, 182);
 
-
 class Player{
   constructor(x, y, radius){
     this.x = x;
@@ -35,11 +33,11 @@ class Player{
   }
   
   move(){
-    if (keyIsDown(87) && this.y > 100 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
+    if (keyIsDown(87) && this.y > 75 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.y -= 5;
     }
     //a
-    if (keyIsDown(65) && this.x > 100 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
+    if (keyIsDown(65) && this.x > this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.x -= 5;
     }
     //s
@@ -47,7 +45,7 @@ class Player{
       this.y += 5;
     }
     //d
-    if (keyIsDown(68) && this.x < width-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
+    if (keyIsDown(68) && this.x < width-this.radius/2-75 && !keyIsDown(32) && !keyIsDown(70)){
       this.x += 5;
     }
     if (keyIsDown(32)){
@@ -63,27 +61,10 @@ class Player{
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  let produceShelf = new Shelves(width-600, height-75, 600, 100, produce);
-  produceShelf.display();
   randomGroceryList();
 }
 
 let person = new Player(200, 200, 25*2);
-
-class Shelves{
-  constructor(x, y, rectWidth, rectHeight, department){
-    this.x = x;
-    this.y = y;
-    this.rectWidth = rectWidth;
-    this.rectHeight = rectHeight;
-    this.department = department;
-  }
-  
-  display(){
-    fill(this.department);
-    rect(this.x, this.y, this.rectWidth, this.rectHeight);
-  }
-}
 
 function draw() {
   background(220);
@@ -125,10 +106,18 @@ function shelving(){
   rectMode(CORNER);
   //pink-red shelves = meat
   fill(251, 195, 188);
-  rect(0, 0, 100, 500);
+  rect(0, height/2, 100, 100);
+  rect(0, height/2-100, 100, 100);
+  rect(0, height/2-200, 100, 100);
+  rect(0, height/2+100, 100, 100);
+  rect(0, height/2+200, 100, 100);
   //blue shelves = freezer
   fill(226, 234, 252);
-  rect(0, 0, width, 75);
+  rect(0, 0, width/5, 75);
+  rect(width/5, 0, width/5, 75);
+  rect(width/5*2, 0, width/5, 75);
+  rect(width/5*3, 0, width/5, 75);
+  rect(width/5*4, 0, width/5, 75);
   //orange shelves = dairy
   fill(249, 199, 132);
   rect(width-75, 0, 75, height);
@@ -139,9 +128,16 @@ function shelving(){
   rect(300, 675, width-900, 100);
   //green shelves = produce
   fill(221, 229, 182);
-  // rect(width-600, height-75, 600, 100);
-  rect(width-500, 675, 300, 100);
-  rect(width-75, 675, 75, height);
+  rect(width-600, height-75, 100, 100);
+  rect(width-500, height-75, 100, 100);
+  rect(width-400, height-75, 100, 100);
+  rect(width-300, height-75, 100, 100);
+  rect(width-200, height-75, 200, 100);
+  rect(width-700, height-75, 100, 100);
+  rect(width-600, 675, 100, 100);
+  rect(width-300, 675, 100, 100);
+  rect(width-400, 675, 100, 100);
+  rect(width-500, 675, 100, 100);
 }
 
 function viewCart(){
