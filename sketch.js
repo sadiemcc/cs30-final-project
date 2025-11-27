@@ -1,5 +1,9 @@
 // Grocery Store Game
 
+function preload(){
+  prodApple = loadImage("/Drawings/produce-apple.png");
+}
+
 let gameState = "shopping";
 let x = 200;
 let y = 200;
@@ -128,6 +132,7 @@ function shelving(){
   rect(300, 675, width-900, 100);
   //green shelves = produce
   fill(221, 229, 182);
+  // image(prodApple, width-600, height-75);
   rect(width-600, height-75, 100, 100);
   rect(width-500, height-75, 100, 100);
   rect(width-400, height-75, 100, 100);
