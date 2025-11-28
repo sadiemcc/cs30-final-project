@@ -1,7 +1,14 @@
 // Grocery Store Game
 
 function preload(){
-  prodApple = loadImage("/Drawings/produce-apple.png");
+  prodBin = loadImage("Drawings/produce-bin.png");
+  prodApple = loadImage("Drawings/produce-apple.png");
+  prodBanana = loadImage("Drawings/produce-bananas.png");
+  prodOranges = loadImage("Drawings/produce-oranges.png");
+  prodCucumbers = loadImage("Drawings/produce-cucumbers.png");
+  prodPotatoes = loadImage("Drawings/produce-potatoes.png");
+  prodTomatoes = loadImage("Drawings/produce-tomatoes.png");
+  prodOnions = loadImage("Drawings/produce-onions.png");
 }
 
 let gameState = "shopping";
@@ -129,20 +136,32 @@ function shelving(){
   fill(255, 246, 204);
   rect(300, 225, width-600, 100);
   rect(300, 450, width-600, 100);
-  rect(300, 675, width-900, 100);
+  rect(300, 650, width-900, 100);
   //green shelves = produce
   fill(221, 229, 182);
-  // image(prodApple, width-600, height-75);
-  rect(width-600, height-75, 100, 100);
-  rect(width-500, height-75, 100, 100);
-  rect(width-400, height-75, 100, 100);
-  rect(width-300, height-75, 100, 100);
-  rect(width-200, height-75, 200, 100);
-  rect(width-700, height-75, 100, 100);
-  rect(width-600, 675, 100, 100);
-  rect(width-300, 675, 100, 100);
-  rect(width-400, 675, 100, 100);
-  rect(width-500, 675, 100, 100);
+  image(prodPotatoes, width-700, height-100);
+  // rect(width-700, height-100, 100, 100);
+  image(prodOnions, width-600, height-100);
+  // rect(width-600, height-100, 100, 100);
+  //BELL PEPPER IMAGE HERE
+  image(prodBin, width-500, height-100);
+  // rect(width-500, height-100, 100, 100);
+  //LETTUCE IMAGE HERE
+  image(prodBin, width-400, height-100);
+  // rect(width-400, height-100, 100, 100);
+  image(prodTomatoes, width-300, height-100);
+  // rect(width-300, height-100, 100, 100);
+  //CARROTS IMAGE HERE
+  image(prodBin, width-200, height-100);
+  // rect(width-200, height-100, 100, 100);
+  image(prodBin, width-100, height-100);
+  // rect(width-100, height-100, 100, 100);
+  image(prodBanana, width-300, 650);
+  // rect(width-300, 650, 100, 100);
+  image(prodApple, width-400, 650);
+  // rect(width-400, 650, 100, 100);
+  image(prodOranges, width-500, 650);
+  // rect(width-500, 650, 100, 100);
 }
 
 function viewCart(){
