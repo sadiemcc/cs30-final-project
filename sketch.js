@@ -1,5 +1,7 @@
 // Grocery Store Game
 
+//for shelving collision, use matter.js?
+
 function preload(){
   prodBin = loadImage("Drawings/produce-bin.png");
   prodApple = loadImage("Drawings/produce-apple.png");
@@ -68,20 +70,43 @@ class Player{
       viewCart();
     }
   }
+
+  interact(){
+    if (this.x > middleProduce.width && this.y < middleProduce.height && this.x < middleProduce.x && this.y > middleProduce.y){
+      text("test", 100, 600);
+    }
+  }
 }
+
+class Shelves{
+  constructor(x, y, rectWidth, rectHeight){
+    this.x = x;
+    this.y = y;
+    this.rectWidth = rectWidth;
+    this.rectHeight = rectHeight;
+  }
+
+  display(){
+    rect(this.x, this.y, this.rectWidth, this.rectHeight);
+  }
+}
+
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   randomGroceryList();
+  let middleProduce = new Shelves(windowWidth-515, 635, 330, 130);
+  middleProduce.display();
 }
 
 let person = new Player(200, 200, 25*2);
 
 function draw() {
-  background(220);
+  // background(220);
   shelving();
   person.display();
   person.move();
+  person.interact();
 }
 
 //randomizes what is on your grocery list
