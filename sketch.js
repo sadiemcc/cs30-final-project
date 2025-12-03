@@ -4,7 +4,7 @@
 
 function preload(){
   prodBin = loadImage("Drawings/produce-bin.png");
-  prodApple = loadImage("Drawings/produce-apple.png");
+  prodApple = loadImage("Drawings/produce-apples.png");
   prodBanana = loadImage("Drawings/produce-bananas.png");
   prodOranges = loadImage("Drawings/produce-oranges.png");
   prodCucumbers = loadImage("Drawings/produce-cucumbers.png");
@@ -71,11 +71,11 @@ class Player{
     }
   }
 
-  interact(){
-    if (this.x > middleProduce.width && this.y < middleProduce.height && this.x < middleProduce.x && this.y > middleProduce.y){
-      text("test", 100, 600);
-    }
-  }
+  // interact(){
+  //   if (this.x > middleProduce.width && this.y < middleProduce.height && this.x < middleProduce.x && this.y > middleProduce.y){
+  //     text("test", 100, 600);
+  //   }
+  // }
 }
 
 class Shelves{
@@ -106,7 +106,7 @@ function draw() {
   shelving();
   person.display();
   person.move();
-  person.interact();
+  // person.interact();
 }
 
 //randomizes what is on your grocery list
