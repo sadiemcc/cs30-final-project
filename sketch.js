@@ -3,6 +3,11 @@
 //for shelving collision, use matter.js?
 
 function preload(){
+  playerFront = loadImage("Drawings/playerFacingFront.png");
+  playerLeft = loadImage("Drawings/playerFacingLeft.png");
+  playerRight = loadImage("Drawings/playerFaceRight.png");
+  playerBack = loadImage("Drawings/playerFacingBack.png");
+
   prodBin = loadImage("Drawings/produce-bin.png");
   prodApple = loadImage("Drawings/produce-apples.png");
   prodBanana = loadImage("Drawings/produce-bananas.png");
@@ -11,6 +16,8 @@ function preload(){
   prodPotatoes = loadImage("Drawings/produce-potatoes.png");
   prodTomatoes = loadImage("Drawings/produce-tomatoes.png");
   prodOnions = loadImage("Drawings/produce-onions.png");
+  prodLettuce = loadImage("Drawings/produce-lettuce.png");
+  prodCarrots = loadImage("Drawings/produce-carrots.png");
 }
 
 let gameState = "shopping";
@@ -48,18 +55,22 @@ class Player{
   move(){
     if (keyIsDown(87) && this.y > 75 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.y -= 5;
+      image(playerFront, this.x, this.y);
     }
     //a
     if (keyIsDown(65) && this.x > this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.x -= 5;
+      image(playerLeft, this.x, this.y);
     }
     //s
     if (keyIsDown(83) && this.y < height-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.y += 5;
+      image(playerBack, this.x, this.y);
     }
     //d
     if (keyIsDown(68) && this.x < width-this.radius/2-75 && !keyIsDown(32) && !keyIsDown(70)){
       this.x += 5;
+      image(playerRight, this.x, this.y);
     }
     if (keyIsDown(32)){
       rectMode(CENTER);
@@ -171,13 +182,11 @@ function shelving(){
   //BELL PEPPER IMAGE HERE
   image(prodBin, width-500, height-100);
   // rect(width-500, height-100, 100, 100);
-  //LETTUCE IMAGE HERE
-  image(prodBin, width-400, height-100);
+  image(prodLettuce, width-400, height-100);
   // rect(width-400, height-100, 100, 100);
   image(prodTomatoes, width-300, height-100);
   // rect(width-300, height-100, 100, 100);
-  //CARROTS IMAGE HERE
-  image(prodBin, width-200, height-100);
+  image(prodCarrots, width-200, height-100);
   // rect(width-200, height-100, 100, 100);
   image(prodBin, width-100, height-100);
   // rect(width-100, height-100, 100, 100);
