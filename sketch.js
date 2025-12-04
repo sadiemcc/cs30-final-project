@@ -3,11 +3,6 @@
 //for shelving collision, use matter.js?
 
 function preload(){
-  playerFront = loadImage("Drawings/playerFacingFront.png");
-  playerLeft = loadImage("Drawings/playerFacingLeft.png");
-  playerRight = loadImage("Drawings/playerFaceRight.png");
-  playerBack = loadImage("Drawings/playerFacingBack.png");
-
   prodBin = loadImage("Drawings/produce-bin.png");
   prodApple = loadImage("Drawings/produce-apples.png");
   prodBanana = loadImage("Drawings/produce-bananas.png");
@@ -55,22 +50,18 @@ class Player{
   move(){
     if (keyIsDown(87) && this.y > 75 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.y -= 5;
-      image(playerFront, this.x, this.y);
     }
     //a
     if (keyIsDown(65) && this.x > this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.x -= 5;
-      image(playerLeft, this.x, this.y);
     }
     //s
     if (keyIsDown(83) && this.y < height-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.y += 5;
-      image(playerBack, this.x, this.y);
     }
     //d
     if (keyIsDown(68) && this.x < width-this.radius/2-75 && !keyIsDown(32) && !keyIsDown(70)){
       this.x += 5;
-      image(playerRight, this.x, this.y);
     }
     if (keyIsDown(32)){
       rectMode(CENTER);
@@ -113,7 +104,7 @@ function setup() {
 let person = new Player(200, 200, 25*2);
 
 function draw() {
-  // background(220);
+  background(220);
   shelving();
   person.display();
   person.move();
