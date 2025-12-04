@@ -1,7 +1,5 @@
 // Grocery Store Game
 
-//for shelving collision, use matter.js?
-
 function preload(){
   prodBin = loadImage("Drawings/produce-bin.png");
   prodApple = loadImage("Drawings/produce-apples.png");
@@ -11,11 +9,13 @@ function preload(){
   prodPotatoes = loadImage("Drawings/produce-potatoes.png");
   prodTomatoes = loadImage("Drawings/produce-tomatoes.png");
   prodOnions = loadImage("Drawings/produce-onions.png");
+  prodBellPeppers = loadImage("Drawings/produce-bellpeppers.png");
   prodLettuce = loadImage("Drawings/produce-lettuce.png");
   prodCarrots = loadImage("Drawings/produce-carrots.png");
 }
 
-let gameState = "shopping";
+let hit = false;
+let gameState = "opening";
 let x = 200;
 let y = 200;
 let radius = 50;
@@ -104,10 +104,13 @@ function setup() {
 let person = new Player(200, 200, 25*2);
 
 function draw() {
-  background(220);
+  homeScreen();
   shelving();
   person.display();
   person.move();
+
+  
+
   // person.interact();
 }
 
@@ -170,8 +173,7 @@ function shelving(){
   // rect(width-700, height-100, 100, 100);
   image(prodOnions, width-600, height-100);
   // rect(width-600, height-100, 100, 100);
-  //BELL PEPPER IMAGE HERE
-  image(prodBin, width-500, height-100);
+  image(prodBellPeppers, width-500, height-100);
   // rect(width-500, height-100, 100, 100);
   image(prodLettuce, width-400, height-100);
   // rect(width-400, height-100, 100, 100);
@@ -185,11 +187,19 @@ function shelving(){
   // rect(width-300, 650, 100, 100);
   image(prodApple, width-400, 650);
   // rect(width-400, 650, 100, 100);
-  image(prodOranges, width-500, 650);
-  // rect(width-500, 650, 100, 100);
+  // image(prodOranges, width-500, 650);
+  rect(width-500, 650, 100, 100);
 }
 
 function viewCart(){
   rectMode(CENTER);
   rect(width/2, height/2, 1000, 600);
+}
+
+function homeScreen(){
+  gameState = "opening";
+  background("pink");
+  textSize(100);
+  textAlign(CENTER);
+  text("TEST", width/2, height/2-200);
 }
