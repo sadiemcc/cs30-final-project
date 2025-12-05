@@ -41,27 +41,25 @@ class Player{
     this.x = x;
     this.y = y;
     this.radius = radius;
-  }
-  
-  display(){
-    circle(this.x, this.y, this.radius);
+    this.speed = 5;
   }
   
   move(){
+    //w
     if (keyIsDown(87) && this.y > 75 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
-      this.y -= 5;
+      this.y -= this.speed;
     }
     //a
     if (keyIsDown(65) && this.x > this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
-      this.x -= 5;
+      this.x -= this.speed;
     }
     //s
     if (keyIsDown(83) && this.y < height-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
-      this.y += 5;
+      this.y += this.speed;
     }
     //d
     if (keyIsDown(68) && this.x < width-this.radius/2-75 && !keyIsDown(32) && !keyIsDown(70)){
-      this.x += 5;
+      this.x += this.speed;
     }
     if (keyIsDown(32)){
       rectMode(CENTER);
@@ -70,6 +68,19 @@ class Player{
     }
     if (keyIsDown(70)){
       viewCart();
+    }
+  }
+
+  collision(){
+    rect(300, 300, 100, 100);
+    circle(this.x, this.y, 50);
+    hit = collideRectCircle(300, 300, 100, 100, this.x, this.y, 50);
+    if (hit === true){
+      stroke("red");
+    }
+    else{
+      stroke(0);
+      this.speed = 5;
     }
   }
 
@@ -106,11 +117,9 @@ let person = new Player(200, 200, 25*2);
 function draw() {
   homeScreen();
   shelving();
-  person.display();
+  // person.display();
   person.move();
-
-  
-
+  person.collision();
   // person.interact();
 }
 
