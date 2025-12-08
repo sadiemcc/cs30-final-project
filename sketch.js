@@ -1,5 +1,9 @@
 // Grocery Store Game
 
+//make individual images of the items to show in cart
+//make cart image
+//make text bubble images (for interaction)
+
 function preload(){
   prodBin = loadImage("Drawings/produce-bin.png");
   prodApple = loadImage("Drawings/produce-apples.png");
@@ -12,10 +16,12 @@ function preload(){
   prodBellPeppers = loadImage("Drawings/produce-bellpeppers.png");
   prodLettuce = loadImage("Drawings/produce-lettuce.png");
   prodCarrots = loadImage("Drawings/produce-carrots.png");
+
+  meatFish = loadImage("Drawings/meat-fish.png");
+  meatGroundBeef = loadImage("Drawings/meat-groundbeef.png");
 }
 
 let hit = false;
-let gameState = "opening";
 let x = 200;
 let y = 200;
 let radius = 50;
@@ -35,6 +41,7 @@ let dairy = (249, 199, 132);
 let dryGoods = (255, 246, 204);
 let freezer = (226, 234, 252);
 let produce = (221, 229, 182);
+let items;
 
 class Player{
   constructor(x, y, radius){
@@ -72,23 +79,37 @@ class Player{
   }
 
   collision(){
-    rect(300, 300, 100, 100);
+    rectMode(CORNER);
+    rect(width-500, 650, 300, 100);
     circle(this.x, this.y, 50);
-    hit = collideRectCircle(300, 300, 100, 100, this.x, this.y, 50);
+    hit = collideRectCircle(width-500, 650, 300, 100, this.x, this.y, 50);
     if (hit === true){
-      stroke("red");
+      textSize(30);
+      fill(0);
+      text("press 1 for oranges", this.x, this.y);
+      text("press 2 for apples", this.x, this.y + 25);
+      text("press 3 for bananas", this.x, this.y + 50);
+      fill(255);
+      for (items of chosenGroceryList){
+        if (items === "oranges" && keyCode === 49 || items === "apples" && keyCode === 50 || items === "bananas" && keyCode === 51){
+          notifShow();
+          return items;
+        }
+      }
     }
     else{
       stroke(0);
       this.speed = 5;
     }
   }
+}
 
-  // interact(){
-  //   if (this.x > middleProduce.width && this.y < middleProduce.height && this.x < middleProduce.x && this.y > middleProduce.y){
-  //     text("test", 100, 600);
-  //   }
-  // }
+function notifShow(){
+  rectMode(CENTER);
+  rect(width/2, height/4+height/2, 500, 200);
+  textAlign(CENTER);
+  fill(0);
+  text(items + " were added to the cart", width/2, height/4+height/2);
 }
 
 class Shelves{
@@ -104,23 +125,20 @@ class Shelves{
   }
 }
 
-
 function setup() {
   createCanvas(windowWidth, windowHeight);
   randomGroceryList();
-  let middleProduce = new Shelves(windowWidth-515, 635, 330, 130);
-  middleProduce.display();
+  // let middleProduce = new Shelves(windowWidth-515, 635, 330, 130);
+  // middleProduce.display();
 }
 
 let person = new Player(200, 200, 25*2);
 
 function draw() {
-  homeScreen();
+  background(155);
   shelving();
-  // person.display();
   person.move();
   person.collision();
-  // person.interact();
 }
 
 //randomizes what is on your grocery list
@@ -196,19 +214,11 @@ function shelving(){
   // rect(width-300, 650, 100, 100);
   image(prodApple, width-400, 650);
   // rect(width-400, 650, 100, 100);
-  // image(prodOranges, width-500, 650);
-  rect(width-500, 650, 100, 100);
+  image(prodOranges, width-500, 650);
+  // rect(width-500, 650, 100, 100);
 }
 
 function viewCart(){
   rectMode(CENTER);
   rect(width/2, height/2, 1000, 600);
-}
-
-function homeScreen(){
-  gameState = "opening";
-  background("pink");
-  textSize(100);
-  textAlign(CENTER);
-  text("TEST", width/2, height/2-200);
 }
