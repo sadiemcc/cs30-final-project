@@ -21,7 +21,9 @@ function preload(){
   meatGroundBeef = loadImage("Drawings/meat-groundbeef.png");
 }
 
-let hit = false;
+let hit1 = false;
+let hit2 = false;
+let hit3 = false;
 let x = 200;
 let y = 200;
 let radius = 50;
@@ -80,10 +82,15 @@ class Player{
 
   collision(){
     rectMode(CORNER);
-    rect(width-500, 650, 300, 100);
+    // rect(width-500, 650, 300, 100);
     circle(this.x, this.y, 50);
-    hit = collideRectCircle(width-500, 650, 300, 100, this.x, this.y, 50);
-    if (hit === true){
+    //apples, oranges, bananas 
+    hit1 = collideRectCircle(width-500, 650, 300, 100, this.x, this.y, 50);
+    //potatoes, onions, bell peppers
+    hit2 = collideRectCircle(width-750, height-100, 300, 100, this.x, this.y, 50);
+    //lettuce, tomatoes, carrots
+    hit3 = collideRectCircle(width-400, height-100, 300, 100, this.x, this.y, 50);
+    if (hit1 === true){
       textSize(30);
       fill(0);
       text("press 1 for oranges", this.x, this.y);
@@ -92,6 +99,34 @@ class Player{
       fill(255);
       for (items of chosenGroceryList){
         if (items === "oranges" && keyCode === 49 || items === "apples" && keyCode === 50 || items === "bananas" && keyCode === 51){
+          notifShow();
+          return items;
+        }
+      }
+    }
+    if (hit2 === true){
+      textSize(30);
+      fill(0);
+      text("press 1 for potatoes", this.x, this.y);
+      text("press 2 for onions", this.x, this.y + 25);
+      text("press 3 for bell peppers", this.x, this.y + 50);
+      fill(255);
+      for (items of chosenGroceryList){
+        if (items === "potatoes" && keyCode === 49 || items === "onions" && keyCode === 50 || items === "bell peppers" && keyCode === 51){
+          notifShow();
+          return items;
+        }
+      }
+    }
+    if (hit3 === true){
+      textSize(30);
+      fill(0);
+      text("press 1 for lettuce", this.x, this.y);
+      text("press 2 for tomatoes", this.x, this.y + 25);
+      text("press 3 for carrots", this.x, this.y + 50);
+      fill(255);
+      for (items of chosenGroceryList){
+        if (items === "lettuce" && keyCode === 49 || items === "tomatoes" && keyCode === 50 || items === "carrots" && keyCode === 51){
           notifShow();
           return items;
         }
