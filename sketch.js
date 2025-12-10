@@ -21,9 +21,9 @@ function preload(){
   meatGroundBeef = loadImage("Drawings/meat-groundbeef.png");
 }
 
-let hit1 = false;
-let hit2 = false;
-let hit3 = false;
+let hitOrange = false;
+let hitApple = false;
+let hitBanana = false;
 let x = 200;
 let y = 200;
 let radius = 50;
@@ -85,48 +85,53 @@ class Player{
     // rect(width-500, 650, 300, 100);
     circle(this.x, this.y, 50);
     //apples, oranges, bananas 
-    hit1 = collideRectCircle(width-500, 650, 300, 100, this.x, this.y, 50);
+    hitOrange = collideRectCircle(width-500, 650, 100, 100, this.x, this.y, 50);
     //potatoes, onions, bell peppers
-    hit2 = collideRectCircle(width-750, height-100, 300, 100, this.x, this.y, 50);
+    // rect(width-750, height-100, 300, 100);
+    hitApple = collideRectCircle(width-400, 650, 100, 100, this.x, this.y, 50);
     //lettuce, tomatoes, carrots
-    hit3 = collideRectCircle(width-400, height-100, 300, 100, this.x, this.y, 50);
-    if (hit1 === true){
+    // rect(width-400, height-100, 350, 100);
+    hitBanana = collideRectCircle(width-300, 650, 100, 100, this.x, this.y, 50);
+    if (hitOrange === true){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width-500, 650, 100, 100);
       textSize(30);
       fill(0);
-      text("press 1 for oranges", this.x, this.y);
-      text("press 2 for apples", this.x, this.y + 25);
-      text("press 3 for bananas", this.x, this.y + 50);
+      text("press 'e' for oranges", this.x, this.y);
       fill(255);
       for (items of chosenGroceryList){
-        if (items === "oranges" && keyCode === 49 || items === "apples" && keyCode === 50 || items === "bananas" && keyCode === 51){
+        if (items === "oranges" && keyCode === 69){
           notifShow();
           return items;
         }
       }
     }
-    if (hit2 === true){
+    if (hitApple === true){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width-400, 650, 100, 100);
       textSize(30);
       fill(0);
-      text("press 1 for potatoes", this.x, this.y);
-      text("press 2 for onions", this.x, this.y + 25);
-      text("press 3 for bell peppers", this.x, this.y + 50);
+      text("press 'e' for apples", this.x, this.y);
       fill(255);
       for (items of chosenGroceryList){
-        if (items === "potatoes" && keyCode === 49 || items === "onions" && keyCode === 50 || items === "bell peppers" && keyCode === 51){
+        if (items === "apples" && keyCode === 69){
           notifShow();
           return items;
         }
       }
     }
-    if (hit3 === true){
+    if (hitBanana === true){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width-300, 650, 100, 100);
       textSize(30);
       fill(0);
-      text("press 1 for lettuce", this.x, this.y);
-      text("press 2 for tomatoes", this.x, this.y + 25);
-      text("press 3 for carrots", this.x, this.y + 50);
+      text("press 'e' for bananas", this.x, this.y);
       fill(255);
       for (items of chosenGroceryList){
-        if (items === "lettuce" && keyCode === 49 || items === "tomatoes" && keyCode === 50 || items === "carrots" && keyCode === 51){
+        if (items === "bananas" && keyCode === 69){
           notifShow();
           return items;
         }
@@ -161,7 +166,7 @@ class Shelves{
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1912, 954);
   randomGroceryList();
   // let middleProduce = new Shelves(windowWidth-515, 635, 330, 130);
   // middleProduce.display();
@@ -232,25 +237,15 @@ function shelving(){
   //green shelves = produce
   fill(221, 229, 182);
   image(prodPotatoes, width-700, height-100);
-  // rect(width-700, height-100, 100, 100);
   image(prodOnions, width-600, height-100);
-  // rect(width-600, height-100, 100, 100);
   image(prodBellPeppers, width-500, height-100);
-  // rect(width-500, height-100, 100, 100);
   image(prodLettuce, width-400, height-100);
-  // rect(width-400, height-100, 100, 100);
   image(prodTomatoes, width-300, height-100);
-  // rect(width-300, height-100, 100, 100);
   image(prodCarrots, width-200, height-100);
-  // rect(width-200, height-100, 100, 100);
   image(prodBin, width-100, height-100);
-  // rect(width-100, height-100, 100, 100);
   image(prodBanana, width-300, 650);
-  // rect(width-300, 650, 100, 100);
   image(prodApple, width-400, 650);
-  // rect(width-400, 650, 100, 100);
   image(prodOranges, width-500, 650);
-  // rect(width-500, 650, 100, 100);
 }
 
 function viewCart(){
