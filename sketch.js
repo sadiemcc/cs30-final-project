@@ -1,5 +1,7 @@
 // Grocery Store Game
 
+//ADD COLLISION TO STOP MOVING WHEN COLLIDING
+//edit collision location (not in player class it runs constantly)
 //make individual images of the items to show in cart
 //make cart image
 //make text bubble images (for interaction)
@@ -28,12 +30,13 @@ let x = 200;
 let y = 200;
 let radius = 50;
 let departments = {
-  produce: ["apples", "bananas", "oranges", "cucumbers", "potatoes", "tomatoes", "onions", "bell peppers", "lettuce", "carrots"],
+  produce: ["apples", "bananas", "oranges", "potatoes", "tomatoes", "onions", "bell peppers", "lettuce", "carrots"],
   freezer: ["frozen pizza", "ice cream", "pizza pops", "frozen veggies", "frozen fruit"],
   meat: ["ground beef", "sausages", "fish", "bacon", "ground pork"],
   dairy: ["butter", "cheese", "eggs", "milk", "yogurt"],
   dryGoods: ["cereal", "cookies", "pasta", "chips", "soup", "flour", "sugar"]
 };
+let theCart = [];
 let chosenGroceryList = [];
 let choices;
 let randomChoice;
@@ -44,6 +47,7 @@ let dryGoods = (255, 246, 204);
 let freezer = (226, 234, 252);
 let produce = (221, 229, 182);
 let items;
+let displayTime = 5000;
 
 class Player{
   constructor(x, y, radius){
@@ -56,6 +60,7 @@ class Player{
   move(){
     //w
     if (keyIsDown(87) && this.y > 75 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
+  
       this.y -= this.speed;
     }
     //a
@@ -82,17 +87,15 @@ class Player{
 
   collision(){
     rectMode(CORNER);
-    // rect(width-500, 650, 300, 100);
     circle(this.x, this.y, 50);
-    //apples, oranges, bananas 
     hitOrange = collideRectCircle(width-500, 650, 100, 100, this.x, this.y, 50);
-    //potatoes, onions, bell peppers
-    // rect(width-750, height-100, 300, 100);
     hitApple = collideRectCircle(width-400, 650, 100, 100, this.x, this.y, 50);
-    //lettuce, tomatoes, carrots
-    // rect(width-400, height-100, 350, 100);
     hitBanana = collideRectCircle(width-300, 650, 100, 100, this.x, this.y, 50);
-    if (hitOrange === true){
+
+    fill(0, 0, 0, 0);
+    textSize(30);
+
+    if (hitOrange === true && !hitApple){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-500, 650, 100, 100);
@@ -103,11 +106,12 @@ class Player{
       for (items of chosenGroceryList){
         if (items === "oranges" && keyCode === 69){
           notifShow();
+          theCart.push(items);
           return items;
         }
       }
     }
-    if (hitApple === true){
+    if (hitApple === true && !hitBanana && !hitOrange){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-400, 650, 100, 100);
@@ -115,14 +119,12 @@ class Player{
       fill(0);
       text("press 'e' for apples", this.x, this.y);
       fill(255);
-      for (items of chosenGroceryList){
-        if (items === "apples" && keyCode === 69){
-          notifShow();
-          return items;
-        }
+      if (chosenGroceryList[0] === "apples" && keyCode === 69){
+        notifShow();
+        theCart.push("apples");
       }
     }
-    if (hitBanana === true){
+    if (hitBanana === true && !hitApple){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-300, 650, 100, 100);
@@ -133,9 +135,11 @@ class Player{
       for (items of chosenGroceryList){
         if (items === "bananas" && keyCode === 69){
           notifShow();
+          theCart.push(items);
           return items;
         }
       }
+      stroke(0);
     }
     else{
       stroke(0);
@@ -149,7 +153,7 @@ function notifShow(){
   rect(width/2, height/4+height/2, 500, 200);
   textAlign(CENTER);
   fill(0);
-  text(items + " were added to the cart", width/2, height/4+height/2);
+  text(chosenGroceryList[0] + " were added to the cart", width/2, height/4+height/2);
 }
 
 class Shelves{
