@@ -65,7 +65,6 @@ class Player{
   move(){
     //w
     if (keyIsDown(87) && this.y > 75 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
-  
       this.y -= this.speed;
     }
     //a
@@ -260,7 +259,7 @@ function notifShow(){
   rect(width/2, height/4+height/2, 500, 200);
   textAlign(CENTER);
   fill(0);
-  text(chosenGroceryList[0] + " were added to the cart", width/2, height/4+height/2);
+  text(theCart[0] + " were added to the cart", width/2, height/4+height/2);
   return items;
 }
 
