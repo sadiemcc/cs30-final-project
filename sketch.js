@@ -11,7 +11,6 @@ function preload(){
   prodApple = loadImage("Drawings/produce-apples.png");
   prodBanana = loadImage("Drawings/produce-bananas.png");
   prodOranges = loadImage("Drawings/produce-oranges.png");
-  prodCucumbers = loadImage("Drawings/produce-cucumbers.png");
   prodPotatoes = loadImage("Drawings/produce-potatoes.png");
   prodTomatoes = loadImage("Drawings/produce-tomatoes.png");
   prodOnions = loadImage("Drawings/produce-onions.png");
@@ -26,6 +25,12 @@ function preload(){
 let hitOrange = false;
 let hitApple = false;
 let hitBanana = false;
+let hitPotato = false;
+let hitOnion = false;
+let hitPepper = false;
+let hitLettuce = false;
+let hitTomato = false;
+let hitCarrot = false;
 let x = 200;
 let y = 200;
 let radius = 50;
@@ -91,6 +96,12 @@ class Player{
     hitOrange = collideRectCircle(width-500, 650, 100, 100, this.x, this.y, 50);
     hitApple = collideRectCircle(width-400, 650, 100, 100, this.x, this.y, 50);
     hitBanana = collideRectCircle(width-300, 650, 100, 100, this.x, this.y, 50);
+    hitPotato = collideRectCircle(width-700, height-100, 100, 100, this.x, this.y, 50);
+    hitOnion = collideRectCircle(width-600, height-100, 100, 100, this.x, this.y, 50);
+    hitPepper = collideRectCircle(width-500, height-100, 100, 100, this.x, this.y, 50);
+    hitLettuce = collideRectCircle(width-400, height-100, 100, 100, this.x, this.y, 50);
+    hitTomato = collideRectCircle(width-300, height-100, 100, 100, this.x, this.y, 50);
+    hitCarrot = collideRectCircle(width-200, height-100, 100, 100, this.x, this.y, 50);
 
     fill(0, 0, 0, 0);
     textSize(30);
@@ -106,8 +117,8 @@ class Player{
       for (items of chosenGroceryList){
         if (items === "oranges" && keyCode === 69){
           notifShow();
-          theCart.push(items);
-          return items;
+          // theCart.push(items);
+          // return items;
         }
       }
     }
@@ -121,7 +132,7 @@ class Player{
       fill(255);
       if (chosenGroceryList[0] === "apples" && keyCode === 69){
         notifShow();
-        theCart.push("apples");
+        // theCart.push("apples");
       }
     }
     if (hitBanana === true && !hitApple){
@@ -135,8 +146,102 @@ class Player{
       for (items of chosenGroceryList){
         if (items === "bananas" && keyCode === 69){
           notifShow();
-          theCart.push(items);
-          return items;
+          // theCart.push(items);
+          // return items;
+        }
+      }
+      stroke(0);
+    }
+    if (hitPotato === true && !hitOnion){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width-700, height-100, 100, 100);
+      textSize(30);
+      fill(0);
+      text("press 'e' for potatoes", this.x, this.y);
+      fill(255);
+      for (items of chosenGroceryList){
+        if (items === "potatoes" && keyCode === 69){
+          notifShow();
+          // theCart.push(items);
+          // return items;
+        }
+      }
+    }
+    if (hitOnion === true && !hitPotato && !hitPepper){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width-600, height-100, 100, 100);
+      textSize(30);
+      fill(0);
+      text("press 'e' for onions", this.x, this.y);
+      fill(255);
+      if (chosenGroceryList[0] === "onions" && keyCode === 69){
+        notifShow();
+        // theCart.push(items);
+        // return items;
+      }
+    }
+    if (hitPepper === true && !hitOnion && !hitLettuce){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width-500, height-100, 100, 100);
+      textSize(30);
+      fill(0);
+      text("press 'e' for bell peppers", this.x, this.y);
+      fill(255);
+      for (items of chosenGroceryList){
+        if (items === "bell peppers" && keyCode === 69){
+          notifShow();
+          // theCart.push(items);
+          // return items;
+        }
+      }
+      stroke(0);
+    }
+    if (hitLettuce === true && !hitPepper && !hitTomato){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width-400, height-100, 100, 100);
+      textSize(30);
+      fill(0);
+      text("press 'e' for lettuce", this.x, this.y);
+      fill(255);
+      for (items of chosenGroceryList){
+        if (items === "lettuce" && keyCode === 69){
+          notifShow();
+          // theCart.push(items);
+          // return items;
+        }
+      }
+    }
+    if (hitTomato === true && !hitLettuce && !hitCarrot){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width-300, height-100, 100, 100);
+      textSize(30);
+      fill(0);
+      text("press 'e' for tomatoes", this.x, this.y);
+      fill(255);
+      if (chosenGroceryList[0] === "tomatoes" && keyCode === 69){
+        notifShow();
+        // theCart.push(items);
+        // return items;
+      }
+    }
+    if (hitCarrot === true && !hitTomato){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width-200, height-100, 100, 100);
+      textSize(30);
+      fill(0);
+      text("press 'e' for carrots", this.x, this.y);
+      fill(255);
+      for (items of chosenGroceryList){
+        if (items === "carrots" && keyCode === 69){
+          notifShow();
+          // theCart.push(items);
+          // return items;
         }
       }
       stroke(0);
@@ -149,11 +254,14 @@ class Player{
 }
 
 function notifShow(){
+  theCart.push(items);
+  stroke(0);
   rectMode(CENTER);
   rect(width/2, height/4+height/2, 500, 200);
   textAlign(CENTER);
   fill(0);
   text(chosenGroceryList[0] + " were added to the cart", width/2, height/4+height/2);
+  return items;
 }
 
 class Shelves{
