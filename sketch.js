@@ -31,13 +31,34 @@ let hitPepper = false;
 let hitLettuce = false;
 let hitTomato = false;
 let hitCarrot = false;
+
+let hitGroundBeef = false;
+let hitSausages = false;
+let hitFish = false;
+let hitBacon = false;
+let hitShrimp = false;
+
+let hitFrozenPizza = false;
+let hitIceCream = false;
+let hitPizzaPops = false;
+let hitFrozenVeggies = false;
+let hitFrozenFruit = false;
+
+let hitCereal = false;
+let hitCookies = false;
+let hitPasta = false;
+let hitChips = false;
+let hitSoup = false;
+let hitFlour = false;
+let hitSugar = false;
+
 let x = 200;
 let y = 200;
 let radius = 50;
 let departments = {
   produce: ["apples", "bananas", "oranges", "potatoes", "tomatoes", "onions", "bell peppers", "lettuce", "carrots"],
   freezer: ["frozen pizza", "ice cream", "pizza pops", "frozen veggies", "frozen fruit"],
-  meat: ["ground beef", "sausages", "fish", "bacon", "ground pork"],
+  meat: ["ground beef", "sausages", "fish", "bacon", "shrimp"],
   dairy: ["butter", "cheese", "eggs", "milk", "yogurt"],
   dryGoods: ["cereal", "cookies", "pasta", "chips", "soup", "flour", "sugar"]
 };
@@ -46,11 +67,6 @@ let chosenGroceryList = [];
 let choices;
 let randomChoice;
 let inventory = [];
-let meat = (251, 195, 188);
-let dairy = (249, 199, 132);
-let dryGoods = (255, 246, 204);
-let freezer = (226, 234, 252);
-let produce = (221, 229, 182);
 let items;
 let displayTime = 5000;
 
@@ -101,6 +117,26 @@ class Player{
     hitLettuce = collideRectCircle(width-400, height-100, 100, 100, this.x, this.y, 50);
     hitTomato = collideRectCircle(width-300, height-100, 100, 100, this.x, this.y, 50);
     hitCarrot = collideRectCircle(width-200, height-100, 100, 100, this.x, this.y, 50);
+
+    hitShrimp = collideRectCircle(0, height/2-200, 100, 100, this.x, this.y, 50);
+    hitBacon = collideRectCircle(0, height/2-100, 100, 100, this.x, this.y, 50);
+    hitGroundBeef = collideRectCircle(0, height/2, 100, 100, this.x, this.y, 50);
+    hitSausages = collideRectCircle(0, height/2+100, 100, 100, this.x, this.y, 50);
+    hitFish = collideRectCircle(0, height/2+200, 100, 100, this.x, this.y, 50);
+
+    hitFrozenPizza = collideRectCircle(0, 0, width/5, 75, this.x, this.y, 50);
+    hitIceCream = collideRectCircle(width/5, 0, width/5, 75, this.x, this.y, 50);
+    hitPizzaPops = collideRectCircle(width/5*2, 0, width/5, 75, this.x, this.y, 50);
+    hitFrozenVeggies = collideRectCircle(width/5*3, 0, width/5, 75, this.x, this.y, 50);
+    hitFrozenFruit = collideRectCircle(width/5*4, 0, width/5, 75, this.x, this.y, 50);
+
+    hitCereal = collideRectCircle();
+    hitCookies = collideRectCircle();
+    hitPasta = collideRectCircle();
+    hitChips = collideRectCircle();
+    hitSoup = collideRectCircle();
+    hitFlour = collideRectCircle();
+    hitSugar = collideRectCircle();
 
     fill(0, 0, 0, 0);
     textSize(30);
@@ -245,6 +281,168 @@ class Player{
       }
       stroke(0);
     }
+    if (hitShrimp === true && !hitBacon){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(0, height/2-200, 100, 100);
+      textSize(30);
+      fill(0);
+      text("press 'e' for shrimp", this.x, this.y);
+      fill(255);
+      for (items of chosenGroceryList){
+        if (items === "shrimp" && keyCode === 69){
+          notifShow();
+          // theCart.push(items);
+          // return items;
+        }
+      }
+      stroke(0);
+    }
+    if (hitBacon === true && !hitShrimp && !hitGroundBeef){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(0, height/2-100, 100, 100);
+      textSize(30);
+      fill(0);
+      text("press 'e' for bacon", this.x, this.y);
+      fill(255);
+      for (items of chosenGroceryList){
+        if (items === "bacon" && keyCode === 69){
+          notifShow();
+          // theCart.push(items);
+          // return items;
+        }
+      }
+      stroke(0);
+    }
+    if (hitGroundBeef === true && !hitBacon && !hitFish){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(0, height/2, 100, 100);
+      textSize(30);
+      fill(0);
+      text("press 'e' for ground beef", this.x, this.y);
+      fill(255);
+      for (items of chosenGroceryList){
+        if (items === "ground beef" && keyCode === 69){
+          notifShow();
+          // theCart.push(items);
+          // return items;
+        }
+      }
+      stroke(0);
+    }
+    if (hitSausages === true && !hitGroundBeef && !hitFish){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(0, height/2+100, 100, 100);
+      textSize(30);
+      fill(0);
+      text("press 'e' for sausages", this.x, this.y);
+      fill(255);
+      for (items of chosenGroceryList){
+        if (items === "sausages" && keyCode === 69){
+          notifShow();
+          // theCart.push(items);
+          // return items;
+        }
+      }
+      stroke(0);
+    }
+    if (hitFish === true && !hitSausages){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(0, height/2+200, 100, 100);
+      textSize(30);
+      fill(0);
+      text("press 'e' for fish", this.x, this.y);
+      fill(255);
+      for (items of chosenGroceryList){
+        if (items === "fish" && keyCode === 69){
+          notifShow();
+          // theCart.push(items);
+          // return items;
+        }
+      }
+      stroke(0);
+    }
+    if (hitFrozenPizza === true && !hitIceCream){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(0, 0, width/5, 75);
+      textSize(30);
+      fill(0);
+      text("press 'e' for frozen pizza", this.x, this.y);
+      fill(255);
+      for (items of chosenGroceryList){
+        if (items === "frozen pizza" && keyCode === 69){
+          notifShow();
+          // theCart.push(items);
+          // return items;
+        }
+      }
+    }
+    if (hitIceCream === true && !hitFrozenPizza && !hitPizzaPops){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width/5, 0, width/5, 75);
+      textSize(30);
+      fill(0);
+      text("press 'e' for ice cream", this.x, this.y);
+      fill(255);
+      if (chosenGroceryList[1] === "ice cream" && keyCode === 69){
+        notifShow();
+        // theCart.push(items);
+        // return items;
+      }
+    }
+    if (hitPizzaPops === true && !hitIceCream && !hitFrozenVeggies){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width/5*2, 0, width/5, 75);
+      textSize(30);
+      fill(0);
+      text("press 'e' for pizza pops", this.x, this.y);
+      fill(255);
+      for (items of chosenGroceryList){
+        if (items === "pizza pops" && keyCode === 69){
+          notifShow();
+          // theCart.push(items);
+          // return items;
+        }
+      }
+      stroke(0);
+    }
+    if (hitFrozenVeggies === true && !hitPizzaPops && !hitFrozenFruit){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width/5*3, 0, width/5, 75);
+      textSize(30);
+      fill(0);
+      text("press 'e' for frozen veggies", this.x, this.y);
+      fill(255);
+      for (items of chosenGroceryList){
+        if (items === "frozen veggies" && keyCode === 69){
+          notifShow();
+          // theCart.push(items);
+          // return items;
+        }
+      }
+    }
+    if (hitFrozenFruit === true && !hitFrozenVeggies){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width/5*4, 0, width/5, 75);
+      textSize(30);
+      fill(0);
+      text("press 'e' for frozen fruit", this.x, this.y);
+      fill(255);
+      if (chosenGroceryList[1] === "frozen fruit" && keyCode === 69){
+        notifShow();
+        // theCart.push(items);
+        // return items;
+      }
+    }
     else{
       stroke(0);
       this.speed = 5;
@@ -345,6 +543,7 @@ function shelving(){
   rect(300, 225, width-600, 100);
   rect(300, 450, width-600, 100);
   rect(300, 650, width-900, 100);
+  rect(300, 650, width-1412, 100);
   //green shelves = produce
   fill(221, 229, 182);
   image(prodPotatoes, width-700, height-100);
