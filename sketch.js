@@ -71,14 +71,14 @@ let departments = {
   dairy: ["butter", "cheese", "eggs", "milk", "yogurt"],
   dryGoods: ["cereal", "cookies", "pasta", "chips", "soup", "flour", "sugar", "crackers"]
 };
-let theCart = [];
 let chosenGroceryList = [];
 let choices;
 let randomChoice;
 let inventory = [];
 let items;
 let displayTime = 5000;
-let inCart = false;
+let itemHit = [];
+let interact = false;
 
 class Player{
   constructor(x, y, radius){
@@ -165,225 +165,286 @@ class Player{
     textSize(30);
 
     if (hitOrange === true && !hitApple){
+      itemHit.push("oranges");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-500, 650, 100, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitApple === true && !hitBanana && !hitOrange){
+      itemHit.push("apples");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-400, 650, 100, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitBanana === true && !hitApple){
+      itemHit.push("bananas");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-300, 650, 100, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitPotato === true && !hitOnion){
+      itemHit.push("potatoes");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-700, height-100, 100, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitOnion === true && !hitPotato && !hitPepper){
+      itemHit.push("onions");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-600, height-100, 100, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitPepper === true && !hitOnion && !hitLettuce){
+      itemHit.push("bell peppers");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-500, height-100, 100, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitLettuce === true && !hitPepper && !hitTomato){
+      itemHit.push("lettuce");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-400, height-100, 100, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitTomato === true && !hitLettuce && !hitCarrot){
+      itemHit.push("tomatoes");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-300, height-100, 100, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitCarrot === true && !hitTomato){
+      itemHit.push("carrots");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-200, height-100, 100, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitShrimp === true && !hitBacon){
+      itemHit.push("shrimp");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(0, height/2-200, 100, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitBacon === true && !hitShrimp && !hitGroundBeef){
+      itemHit.push("bacon");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(0, height/2-100, 100, 100);
       interactionUI();
+      return itemHit;
     }
-    if (hitGroundBeef === true && !hitBacon && !hitFish){
+    if (hitGroundBeef === true && !hitBacon && !hitSausages){
+      itemHit.push("ground beef");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(0, height/2, 100, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitSausages === true && !hitGroundBeef && !hitFish){
+      itemHit.push("sausages");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(0, height/2+100, 100, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitFish === true && !hitSausages){
+      itemHit.push("fish");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(0, height/2+200, 100, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitFrozenPizza === true && !hitIceCream){
+      itemHit.push("frozen pizza");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(0, 0, width/6, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitIceCream === true && !hitFrozenPizza && !hitPizzaPops){
+      itemHit.push("ice cream");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width/6, 0, width/6, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitPizzaPops === true && !hitIceCream && !hitFrozenVeggies){
+      itemHit.push("pizza pops");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width/6*2, 0, width/6, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitFrozenVeggies === true && !hitPizzaPops && !hitFrozenFruit){
+      itemHit.push("frozen veggies");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width/6*3, 0, width/6, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitFrozenFruit === true && !hitFrozenVeggies){
+      itemHit.push("frozen fruit");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width/6*4, 0, width/6, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitCereal === true && !hitCookies){
+      itemHit.push("cereal");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(300, 225, 450, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitCookies === true && !hitCereal && !hitPasta){
+      itemHit.push("cookies");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(750, 225, 450, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitPasta === true && !hitCookies && !hitChips){
+      itemHit.push("pasta");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(1200, 225, 450, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitChips === true && !hitPasta && !hitSoup){
+      itemHit.push("chips");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(300, 450, 450, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitSoup === true && !hitChips && !hitFlour){
+      itemHit.push("soup");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(750, 450, 450, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitFlour === true && !hitSoup && !hitSugar){
+      itemHit.push("flour");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(1200, 450, 450, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitSugar === true && !hitFlour && !hitCrackers){
+      itemHit.push("sugar");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(300, 650, 500, 100);
       interactionUI();
+      return itemHit;
     }
     if (hitCrackers === true && !hitSugar){
+      itemHit.push("crackers");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(800, 650, 500, 100);
       interactionUI();
+      return itemHit;
     }
-
     if (hitButter === true && !hitCheese){
+      itemHit.push("butter");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-100, 0, 100, 754/5);
       interactionUI();
+      return itemHit;
     }
     if (hitCheese === true && !hitButter && !hitEggs){
+      itemHit.push("cheese");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-100, 754/5, 100, 754/5);
       interactionUI();
+      return itemHit;
     }
     if (hitEggs === true && !hitCheese && !hitMilk){
+      itemHit.push("eggs");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-100, 754/5*2, 100, 754/5);
       interactionUI();
+      return itemHit;
     }
     if (hitMilk === true && !hitEggs && !hitYogurt){
+      itemHit.push("milk");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-100, 754/5*3, 100, 754/5);
       interactionUI();
+      return itemHit;
     }
     if (hitYogurt === true && !hitMilk){
+      itemHit.push("yogurt");
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-100, 754/5*4, 100, 754/5);
       interactionUI();
+      return itemHit;
     }
     else{
       stroke(0);
+      itemHit = [];
+      interact = false;
     }
-  }
-}
-
-function keyPressed(){
-  if (key === 'f'){
-    viewCart();
   }
 }
 
 function notifShow(){
-  theCart.push(items);
   stroke(0);
   rectMode(CENTER);
   rect(width/2, height/4+height/2, 500, 200);
   textAlign(CENTER);
   fill(0);
-  text(theCart[0] + " were added to the cart", width/2, height/4+height/2);
-  return items;
+  text(itemHit[0] + " were added to the cart", width/2, height/4+height/2);
 }
 
 function interactionUI(){
   fill(0);
   textSize(30);
-  text("press 'e' for ", person.x, person.y);
+  text("press 'e' for "+ itemHit[0], person.x, person.y);
+  if (key === 'e' && itemHit[0] === chosenGroceryList[0]){
+    inventory.push(itemHit[0]);
+    notifShow();
+  }
 }
 
 function setup() {
