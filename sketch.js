@@ -22,6 +22,7 @@ function preload(){
   meatGroundBeef = loadImage("Drawings/meat-groundbeef.png");
 }
 
+//PRODUCE VARIABLES
 let hitOrange = false;
 let hitApple = false;
 let hitBanana = false;
@@ -32,18 +33,21 @@ let hitLettuce = false;
 let hitTomato = false;
 let hitCarrot = false;
 
+//MEAT VARIABLES
 let hitGroundBeef = false;
 let hitSausages = false;
 let hitFish = false;
 let hitBacon = false;
 let hitShrimp = false;
 
+//FROZEN VARIABLES
 let hitFrozenPizza = false;
 let hitIceCream = false;
 let hitPizzaPops = false;
 let hitFrozenVeggies = false;
 let hitFrozenFruit = false;
 
+//DRY GOODS VARIABLES
 let hitCereal = false;
 let hitCookies = false;
 let hitPasta = false;
@@ -53,15 +57,13 @@ let hitFlour = false;
 let hitSugar = false;
 let hitCrackers = false;
 
+//DAIRY VARIABLES
 let hitButter = false;
 let hitCheese = false;
 let hitEggs = false;
 let hitMilk = false;
 let hitYogurt = false;
 
-let x = 200;
-let y = 200;
-let radius = 50;
 let departments = {
   produce: ["apples", "bananas", "oranges", "potatoes", "tomatoes", "onions", "bell peppers", "lettuce", "carrots"],
   freezer: ["frozen pizza", "ice cream", "pizza pops", "frozen veggies", "frozen fruit"],
@@ -76,6 +78,7 @@ let randomChoice;
 let inventory = [];
 let items;
 let displayTime = 5000;
+let inCart = false;
 
 class Player{
   constructor(x, y, radius){
@@ -87,7 +90,7 @@ class Player{
   
   move(){
     //w
-    if (keyIsDown(87) && this.y > 100 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
+    if (keyIsDown(87) && this.y > 0 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.y -= this.speed;
     }
     //a
@@ -99,7 +102,7 @@ class Player{
       this.y += this.speed;
     }
     //d
-    if (keyIsDown(68) && this.x < width-this.radius/2-100 && !keyIsDown(32) && !keyIsDown(70)){
+    if (keyIsDown(68) && this.x < width-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.x += this.speed;
     }
     if (keyIsDown(32) && !keyIsDown(70)){
@@ -115,42 +118,48 @@ class Player{
   collision(){
     rectMode(CORNER);
     circle(this.x, this.y, 50);
-    hitOrange = collideRectCircle(width-500, 650, 100, 100, this.x, this.y, 50);
-    hitApple = collideRectCircle(width-400, 650, 100, 100, this.x, this.y, 50);
-    hitBanana = collideRectCircle(width-300, 650, 100, 100, this.x, this.y, 50);
-    hitPotato = collideRectCircle(width-700, height-100, 100, 100, this.x, this.y, 50);
-    hitOnion = collideRectCircle(width-600, height-100, 100, 100, this.x, this.y, 50);
-    hitPepper = collideRectCircle(width-500, height-100, 100, 100, this.x, this.y, 50);
-    hitLettuce = collideRectCircle(width-400, height-100, 100, 100, this.x, this.y, 50);
-    hitTomato = collideRectCircle(width-300, height-100, 100, 100, this.x, this.y, 50);
-    hitCarrot = collideRectCircle(width-200, height-100, 100, 100, this.x, this.y, 50);
 
-    hitShrimp = collideRectCircle(0, height/2-200, 100, 100, this.x, this.y, 50);
-    hitBacon = collideRectCircle(0, height/2-100, 100, 100, this.x, this.y, 50);
-    hitGroundBeef = collideRectCircle(0, height/2, 100, 100, this.x, this.y, 50);
-    hitSausages = collideRectCircle(0, height/2+100, 100, 100, this.x, this.y, 50);
-    hitFish = collideRectCircle(0, height/2+200, 100, 100, this.x, this.y, 50);
+    //PRODUCE COLLISION
+    hitOrange = collideRectCircle(width-500, 650, 100, 100, this.x, this.y, this.radius);
+    hitApple = collideRectCircle(width-400, 650, 100, 100, this.x, this.y, this.radius);
+    hitBanana = collideRectCircle(width-300, 650, 100, 100, this.x, this.y, this.radius);
+    hitPotato = collideRectCircle(width-700, height-100, 100, 100, this.x, this.y, this.radius);
+    hitOnion = collideRectCircle(width-600, height-100, 100, 100, this.x, this.y, this.radius);
+    hitPepper = collideRectCircle(width-500, height-100, 100, 100, this.x, this.y, this.radius);
+    hitLettuce = collideRectCircle(width-400, height-100, 100, 100, this.x, this.y, this.radius);
+    hitTomato = collideRectCircle(width-300, height-100, 100, 100, this.x, this.y, this.radius);
+    hitCarrot = collideRectCircle(width-200, height-100, 100, 100, this.x, this.y, this.radius);
 
-    hitFrozenPizza = collideRectCircle(0, 0, width/6, 100, this.x, this.y, 50);
-    hitIceCream = collideRectCircle(width/6, 0, width/6, 100, this.x, this.y, 50);
-    hitPizzaPops = collideRectCircle(width/6*2, 0, width/6, 100, this.x, this.y, 50);
-    hitFrozenVeggies = collideRectCircle(width/6*3, 0, width/6, 100, this.x, this.y, 50);
-    hitFrozenFruit = collideRectCircle(width/6*4, 0, width/6, 100, this.x, this.y, 50);
+    //MEAT COLLISION
+    hitShrimp = collideRectCircle(0, height/2-200, 100, 100, this.x, this.y, this.radius);
+    hitBacon = collideRectCircle(0, height/2-100, 100, 100, this.x, this.y, this.radius);
+    hitGroundBeef = collideRectCircle(0, height/2, 100, 100, this.x, this.y, this.radius);
+    hitSausages = collideRectCircle(0, height/2+100, 100, 100, this.x, this.y, this.radius);
+    hitFish = collideRectCircle(0, height/2+200, 100, 100, this.x, this.y, this.radius);
 
-    hitCereal = collideRectCircle(300, 225, 450, 100, this.x, this.y, 50);
-    hitCookies = collideRectCircle(750, 225, 450, 100, this.x, this.y, 50);
-    hitPasta = collideRectCircle(1200, 225, 450, 100, this.x, this.y, 50);
-    hitChips = collideRectCircle(300, 450, 450, 100, this.x, this.y, 50);
-    hitSoup = collideRectCircle(750, 450, 450, 100, this.x, this.y, 50);
-    hitFlour = collideRectCircle(1200, 450, 450, 100, this.x, this.y, 50);
-    hitSugar = collideRectCircle(300, 650, 500, 100, this.x, this.y, 50);
-    hitCrackers = collideRectCircle(800, 650, 500, 100, this.x, this.y, 50);
+    //FROZEN COLLISION
+    hitFrozenPizza = collideRectCircle(0, 0, width/6, 100, this.x, this.y, this.radius);
+    hitIceCream = collideRectCircle(width/6, 0, width/6, 100, this.x, this.y, this.radius);
+    hitPizzaPops = collideRectCircle(width/6*2, 0, width/6, 100, this.x, this.y, this.radius);
+    hitFrozenVeggies = collideRectCircle(width/6*3, 0, width/6, 100, this.x, this.y, this.radius);
+    hitFrozenFruit = collideRectCircle(width/6*4, 0, width/6, 100, this.x, this.y, this.radius);
 
-    hitButter = collideRectCircle();
-    hitCheese = collideRectCircle();
-    hitEggs = collideRectCircle();
-    hitMilk = collideRectCircle();
-    hitYogurt = collideRectCircle();
+    //DRY GOODS COLLISION
+    hitCereal = collideRectCircle(300, 225, 450, 100, this.x, this.y, this.radius);
+    hitCookies = collideRectCircle(750, 225, 450, 100, this.x, this.y, this.radius);
+    hitPasta = collideRectCircle(1200, 225, 450, 100, this.x, this.y, this.radius);
+    hitChips = collideRectCircle(300, 450, 450, 100, this.x, this.y, this.radius);
+    hitSoup = collideRectCircle(750, 450, 450, 100, this.x, this.y, this.radius);
+    hitFlour = collideRectCircle(1200, 450, 450, 100, this.x, this.y, this.radius);
+    hitSugar = collideRectCircle(300, 650, 500, 100, this.x, this.y, this.radius);
+    hitCrackers = collideRectCircle(800, 650, 500, 100, this.x, this.y, this.radius);
+
+    //DAIRY COLLISION
+    hitButter = collideRectCircle(width-100, 0, 100, 754/5, this.x, this.y, this.radius);
+    hitCheese = collideRectCircle(width-100, 754/5, 100, 754/5, this.x, this.y, this.radius);
+    hitEggs = collideRectCircle(width-100, 754/5*2, 100, 754/5, this.x, this.y, this.radius);
+    hitMilk = collideRectCircle(width-100, 754/5*3, 100, 754/5, this.x, this.y, this.radius);
+    hitYogurt = collideRectCircle(width-100, 754/5*4, 100, 754/5, this.x, this.y, this.radius);
 
     fill(0, 0, 0, 0);
     textSize(30);
@@ -159,437 +168,204 @@ class Player{
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-500, 650, 100, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for oranges", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "oranges" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
+      interactionUI();
     }
     if (hitApple === true && !hitBanana && !hitOrange){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-400, 650, 100, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for apples", this.x, this.y);
-      fill(255);
-      if (chosenGroceryList[0] === "apples" && keyCode === 69){
-        notifShow();
-        // theCart.push("apples");
-      }
+      interactionUI();
     }
     if (hitBanana === true && !hitApple){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-300, 650, 100, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for bananas", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "bananas" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
-      stroke(0);
+      interactionUI();
     }
     if (hitPotato === true && !hitOnion){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-700, height-100, 100, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for potatoes", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "potatoes" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
+      interactionUI();
     }
     if (hitOnion === true && !hitPotato && !hitPepper){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-600, height-100, 100, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for onions", this.x, this.y);
-      fill(255);
-      if (chosenGroceryList[0] === "onions" && keyCode === 69){
-        notifShow();
-        // theCart.push(items);
-        // return items;
-      }
+      interactionUI();
     }
     if (hitPepper === true && !hitOnion && !hitLettuce){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-500, height-100, 100, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for bell peppers", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "bell peppers" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
-      stroke(0);
+      interactionUI();
     }
     if (hitLettuce === true && !hitPepper && !hitTomato){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-400, height-100, 100, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for lettuce", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "lettuce" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
+      interactionUI();
     }
     if (hitTomato === true && !hitLettuce && !hitCarrot){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-300, height-100, 100, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for tomatoes", this.x, this.y);
-      fill(255);
-      if (chosenGroceryList[0] === "tomatoes" && keyCode === 69){
-        notifShow();
-        // theCart.push(items);
-        // return items;
-      }
+      interactionUI();
     }
     if (hitCarrot === true && !hitTomato){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width-200, height-100, 100, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for carrots", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "carrots" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
-      stroke(0);
+      interactionUI();
     }
     if (hitShrimp === true && !hitBacon){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(0, height/2-200, 100, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for shrimp", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "shrimp" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
-      stroke(0);
+      interactionUI();
     }
     if (hitBacon === true && !hitShrimp && !hitGroundBeef){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(0, height/2-100, 100, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for bacon", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "bacon" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
-      stroke(0);
+      interactionUI();
     }
     if (hitGroundBeef === true && !hitBacon && !hitFish){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(0, height/2, 100, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for ground beef", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "ground beef" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
-      stroke(0);
+      interactionUI();
     }
     if (hitSausages === true && !hitGroundBeef && !hitFish){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(0, height/2+100, 100, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for sausages", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "sausages" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
-      stroke(0);
+      interactionUI();
     }
     if (hitFish === true && !hitSausages){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(0, height/2+200, 100, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for fish", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "fish" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
-      stroke(0);
+      interactionUI();
     }
     if (hitFrozenPizza === true && !hitIceCream){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(0, 0, width/6, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for frozen pizza", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "frozen pizza" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
+      interactionUI();
     }
     if (hitIceCream === true && !hitFrozenPizza && !hitPizzaPops){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width/6, 0, width/6, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for ice cream", this.x, this.y);
-      fill(255);
-      if (chosenGroceryList[1] === "ice cream" && keyCode === 69){
-        notifShow();
-        // theCart.push(items);
-        // return items;
-      }
+      interactionUI();
     }
     if (hitPizzaPops === true && !hitIceCream && !hitFrozenVeggies){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width/6*2, 0, width/6, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for pizza pops", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "pizza pops" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
-      stroke(0);
+      interactionUI();
     }
     if (hitFrozenVeggies === true && !hitPizzaPops && !hitFrozenFruit){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width/6*3, 0, width/6, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for frozen veggies", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "frozen veggies" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
+      interactionUI();
     }
     if (hitFrozenFruit === true && !hitFrozenVeggies){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(width/6*4, 0, width/6, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for frozen fruit", this.x, this.y);
-      fill(255);
-      if (chosenGroceryList[1] === "frozen fruit" && keyCode === 69){
-        notifShow();
-        // theCart.push(items);
-        // return items;
-      }
+      interactionUI();
     }
-
     if (hitCereal === true && !hitCookies){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(300, 225, 450, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for cereal", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "cereal" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
-      stroke(0);
+      interactionUI();
     }
     if (hitCookies === true && !hitCereal && !hitPasta){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(750, 225, 450, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for cookies", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "cookies" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
-      stroke(0);
+      interactionUI();
     }
     if (hitPasta === true && !hitCookies && !hitChips){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(1200, 225, 450, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for pasta", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "pasta" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
-      stroke(0);
+      interactionUI();
     }
     if (hitChips === true && !hitPasta && !hitSoup){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(300, 450, 450, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for chips", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "chips" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
+      interactionUI();
     }
     if (hitSoup === true && !hitChips && !hitFlour){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(750, 450, 450, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for soup", this.x, this.y);
-      fill(255);
-      if (chosenGroceryList[1] === "soup" && keyCode === 69){
-        notifShow();
-        // theCart.push(items);
-        // return items;
-      }
+      interactionUI();
     }
     if (hitFlour === true && !hitSoup && !hitSugar){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(1200, 450, 450, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for flour", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "flour" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
-      stroke(0);
+      interactionUI();
     }
     if (hitSugar === true && !hitFlour && !hitCrackers){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(300, 650, 500, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for sugar", this.x, this.y);
-      fill(255);
-      for (items of chosenGroceryList){
-        if (items === "sugar" && keyCode === 69){
-          notifShow();
-          // theCart.push(items);
-          // return items;
-        }
-      }
+      interactionUI();
     }
     if (hitCrackers === true && !hitSugar){
       stroke("yellow");
       fill(0, 0, 0, 0);
       rect(800, 650, 500, 100);
-      textSize(30);
-      fill(0);
-      text("press 'e' for crackers", this.x, this.y);
-      fill(255);
-      if (chosenGroceryList[1] === "crackers" && keyCode === 69){
-        notifShow();
-        // theCart.push(items);
-        // return items;
-      }
+      interactionUI();
+    }
+
+    if (hitButter === true && !hitCheese){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width-100, 0, 100, 754/5);
+      interactionUI();
+    }
+    if (hitCheese === true && !hitButter && !hitEggs){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width-100, 754/5, 100, 754/5);
+      interactionUI();
+    }
+    if (hitEggs === true && !hitCheese && !hitMilk){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width-100, 754/5*2, 100, 754/5);
+      interactionUI();
+    }
+    if (hitMilk === true && !hitEggs && !hitYogurt){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width-100, 754/5*3, 100, 754/5);
+      interactionUI();
+    }
+    if (hitYogurt === true && !hitMilk){
+      stroke("yellow");
+      fill(0, 0, 0, 0);
+      rect(width-100, 754/5*4, 100, 754/5);
+      interactionUI();
     }
     else{
       stroke(0);
-      this.speed = 5;
     }
+  }
+}
+
+function keyPressed(){
+  if (key === 'f'){
+    viewCart();
   }
 }
 
@@ -604,27 +380,18 @@ function notifShow(){
   return items;
 }
 
-class Shelves{
-  constructor(x, y, rectWidth, rectHeight){
-    this.x = x;
-    this.y = y;
-    this.rectWidth = rectWidth;
-    this.rectHeight = rectHeight;
-  }
-
-  display(){
-    rect(this.x, this.y, this.rectWidth, this.rectHeight);
-  }
+function interactionUI(){
+  fill(0);
+  textSize(30);
+  text("press 'e' for ", person.x, person.y);
 }
 
 function setup() {
   createCanvas(1912, 954);
   randomGroceryList();
-  // let middleProduce = new Shelves(windowWidth-515, 635, 330, 130);
-  // middleProduce.display();
 }
 
-let person = new Player(200, 200, 25*2);
+let person = new Player(25, 875, 50);
 
 function draw() {
   background(155);
@@ -680,7 +447,11 @@ function shelving(){
   rect(width/6*4, 0, width/6, 100);
   //orange shelves = dairy
   fill(249, 199, 132);
-  rect(width-100, 225, 100, height-100);
+  rect(width-100, 0, 100, 754/5);
+  rect(width-100, 754/5, 100, 754/5);
+  rect(width-100, 754/5*2, 100, 754/5);
+  rect(width-100, 754/5*3, 100, 754/5);
+  rect(width-100, 754/5*4, 100, 754/5);
   //yellow shelves = dry goods
   fill(255, 246, 204);
   rect(300, 225, 450, 100);
