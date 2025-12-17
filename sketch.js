@@ -76,9 +76,9 @@ let choices;
 let randomChoice;
 let inventory = [];
 let items;
-let displayTime = 5000;
 let itemHit = [];
 let interact = false;
+let hitting = false;
 
 class Player{
   constructor(x, y, radius){
@@ -170,6 +170,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width-500, 650, 100, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitApple === true && !hitBanana && !hitOrange){
@@ -178,6 +179,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width-400, 650, 100, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitBanana === true && !hitApple){
@@ -186,6 +188,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width-300, 650, 100, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitPotato === true && !hitOnion){
@@ -194,6 +197,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width-700, height-100, 100, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitOnion === true && !hitPotato && !hitPepper){
@@ -202,6 +206,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width-600, height-100, 100, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitPepper === true && !hitOnion && !hitLettuce){
@@ -210,6 +215,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width-500, height-100, 100, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitLettuce === true && !hitPepper && !hitTomato){
@@ -218,6 +224,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width-400, height-100, 100, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitTomato === true && !hitLettuce && !hitCarrot){
@@ -226,6 +233,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width-300, height-100, 100, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitCarrot === true && !hitTomato){
@@ -234,6 +242,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width-200, height-100, 100, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitShrimp === true && !hitBacon){
@@ -242,6 +251,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(0, height/2-200, 100, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitBacon === true && !hitShrimp && !hitGroundBeef){
@@ -250,6 +260,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(0, height/2-100, 100, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitGroundBeef === true && !hitBacon && !hitSausages){
@@ -258,6 +269,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(0, height/2, 100, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitSausages === true && !hitGroundBeef && !hitFish){
@@ -266,6 +278,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(0, height/2+100, 100, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitFish === true && !hitSausages){
@@ -274,6 +287,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(0, height/2+200, 100, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitFrozenPizza === true && !hitIceCream){
@@ -282,6 +296,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(0, 0, width/6, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitIceCream === true && !hitFrozenPizza && !hitPizzaPops){
@@ -290,6 +305,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width/6, 0, width/6, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitPizzaPops === true && !hitIceCream && !hitFrozenVeggies){
@@ -298,6 +314,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width/6*2, 0, width/6, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitFrozenVeggies === true && !hitPizzaPops && !hitFrozenFruit){
@@ -306,6 +323,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width/6*3, 0, width/6, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitFrozenFruit === true && !hitFrozenVeggies){
@@ -314,6 +332,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width/6*4, 0, width/6, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitCereal === true && !hitCookies){
@@ -322,6 +341,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(300, 225, 450, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitCookies === true && !hitCereal && !hitPasta){
@@ -330,6 +350,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(750, 225, 450, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitPasta === true && !hitCookies && !hitChips){
@@ -338,6 +359,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(1200, 225, 450, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitChips === true && !hitPasta && !hitSoup){
@@ -346,6 +368,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(300, 450, 450, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitSoup === true && !hitChips && !hitFlour){
@@ -354,6 +377,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(750, 450, 450, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitFlour === true && !hitSoup && !hitSugar){
@@ -362,6 +386,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(1200, 450, 450, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitSugar === true && !hitFlour && !hitCrackers){
@@ -370,6 +395,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(300, 650, 500, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitCrackers === true && !hitSugar){
@@ -378,6 +404,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(800, 650, 500, 100);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitButter === true && !hitCheese){
@@ -386,6 +413,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width-100, 0, 100, 754/5);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitCheese === true && !hitButter && !hitEggs){
@@ -394,6 +422,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width-100, 754/5, 100, 754/5);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitEggs === true && !hitCheese && !hitMilk){
@@ -402,6 +431,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width-100, 754/5*2, 100, 754/5);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitMilk === true && !hitEggs && !hitYogurt){
@@ -410,6 +440,7 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width-100, 754/5*3, 100, 754/5);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     if (hitYogurt === true && !hitMilk){
@@ -418,32 +449,28 @@ class Player{
       fill(0, 0, 0, 0);
       rect(width-100, 754/5*4, 100, 754/5);
       interactionUI();
+      stroke(0);
       return itemHit;
     }
     else{
-      stroke(0);
       itemHit = [];
       interact = false;
+      hitting = false;
     }
   }
 }
 
-function notifShow(){
-  stroke(0);
-  rectMode(CENTER);
-  rect(width/2, height/4+height/2, 500, 200);
-  textAlign(CENTER);
-  fill(0);
-  text(itemHit[0] + " were added to the cart", width/2, height/4+height/2);
-}
-
 function interactionUI(){
+  hitting = true;
   fill(0);
   textSize(30);
   text("press 'e' for "+ itemHit[0], person.x, person.y);
-  if (key === 'e' && itemHit[0] === chosenGroceryList[0]){
+}
+
+//MAKE WORK FOR ALL ITEMS
+function keyPressed(){
+  if (key === 'e' && hitting === true && itemHit[0] === chosenGroceryList[0] && inventory[0] !== itemHit[0]){
     inventory.push(itemHit[0]);
-    notifShow();
   }
 }
 
