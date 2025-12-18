@@ -6,7 +6,7 @@
 ## Needs to Have
 - ♥ Movement 
 - ♥ Store with shelving 
-- Interaction ability to grab items off shelves
+- ♥ Interaction ability to grab items off shelves
 - ♥ Randomly generated grocery list 
 - ♥ Ability to hold up grocery list 
 - Front/back/sides player model

@@ -7,6 +7,8 @@
 //make text bubble images (for interaction)
 
 function preload(){
+  floorImg = loadImage("Drawings/floor.jpg");
+
   prodBin = loadImage("Drawings/produce-bin.png");
   prodApple = loadImage("Drawings/produce-apples.png");
   prodBanana = loadImage("Drawings/produce-bananas.png");
@@ -467,10 +469,13 @@ function interactionUI(){
   text("press 'e' for "+ itemHit[0], person.x, person.y);
 }
 
-//MAKE WORK FOR ALL ITEMS
 function keyPressed(){
-  if (key === 'e' && hitting === true && itemHit[0] === chosenGroceryList[0] && inventory[0] !== itemHit[0]){
-    inventory.push(itemHit[0]);
+  if (key === 'e' && hitting === true){
+    for (let item = 0; item < chosenGroceryList.length; item++){
+      if (itemHit[0] === chosenGroceryList[item] && inventory[item] !== itemHit[0]){
+        inventory.push(itemHit[0]);
+      }
+    }
   }
 }
 
@@ -482,7 +487,15 @@ function setup() {
 let person = new Player(25, 875, 50);
 
 function draw() {
-  background(155);
+  image(floorImg, 0, 0,width/4, height/2);
+  image(floorImg, width/4, 0, width/4, height/2);
+  image(floorImg, width/2, 0, width/4, height/2);
+  image(floorImg, width/2+width/4, 0, width/4, height/2);
+  image(floorImg, 0, height/2,width/4, height/2);
+  image(floorImg, width/4, height/2, width/4, height/2);
+  image(floorImg, width/2, height/2, width/4, height/2);
+  image(floorImg, width/2+width/4, height/2, width/4, height/2);
+  // background(155);
   shelving();
   person.move();
   person.collision();
