@@ -500,6 +500,9 @@ function draw() {
   shelving();
   person.move();
   person.collision();
+  if (gameState === "titleScreen"){
+    title();
+  }
 }
 
 //randomizes what is on your grocery list
@@ -584,5 +587,17 @@ function viewCart(){
 }
 
 function title(){
-  
+  background("pink");
+  fill(0);
+  textAlign(CENTER);
+  textSize(70);
+  text("test", width/2, height/3);
+  rectMode(CENTER);
+  rect(width/2, height/2+height/4, 400, 200);
+}
+
+function mousePressed(){
+  if (gameState === "titleScreen" && ){
+
+  }
 }
