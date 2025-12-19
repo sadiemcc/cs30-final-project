@@ -81,6 +81,7 @@ let items;
 let itemHit = [];
 let interact = false;
 let hitting = false;
+let gameState = "titleScreen";
 
 class Player{
   constructor(x, y, radius){
@@ -580,4 +581,8 @@ function shelving(){
 function viewCart(){
   rectMode(CENTER);
   rect(width/2, height/2, 1000, 600);
+}
+
+function title(){
+  
 }
