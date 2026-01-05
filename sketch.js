@@ -83,6 +83,7 @@ let interact = false;
 let hitting = false;
 let gameState = "titleScreen";
 
+
 class Player{
   constructor(x, y, radius){
     this.x = x;
@@ -116,6 +117,7 @@ class Player{
     if (keyIsDown(70) && !keyIsDown(32)){
       viewCart();
     }
+    imageMode(CORNER);
   }
 
   collision(){
@@ -467,6 +469,7 @@ function interactionUI(){
   hitting = true;
   fill(0);
   textSize(30);
+  noStroke();
   text("press 'e' for "+ itemHit[0], person.x, person.y);
 }
 
@@ -488,21 +491,26 @@ function setup() {
 let person = new Player(25, 875, 50);
 
 function draw() {
-  image(floorImg, 0, 0,width/4, height/2);
-  image(floorImg, width/4, 0, width/4, height/2);
-  image(floorImg, width/2, 0, width/4, height/2);
-  image(floorImg, width/2+width/4, 0, width/4, height/2);
-  image(floorImg, 0, height/2,width/4, height/2);
-  image(floorImg, width/4, height/2, width/4, height/2);
-  image(floorImg, width/2, height/2, width/4, height/2);
-  image(floorImg, width/2+width/4, height/2, width/4, height/2);
-  // background(155);
-  shelving();
-  person.move();
-  person.collision();
+  if (gameState === "game"){
+    image(floorImg, 0, 0,width/4, height/2);
+    image(floorImg, width/4, 0, width/4, height/2);
+    image(floorImg, width/2, 0, width/4, height/2);
+    image(floorImg, width/2+width/4, 0, width/4, height/2);
+    image(floorImg, 0, height/2,width/4, height/2);
+    image(floorImg, width/4, height/2, width/4, height/2);
+    image(floorImg, width/2, height/2, width/4, height/2);
+    image(floorImg, width/2+width/4, height/2, width/4, height/2);
+    shelving();
+    person.move();
+    person.collision();
+  }
+  if (gameState === "explain"){
+    explaination();
+  }
   if (gameState === "titleScreen"){
     title();
   }
+  // background(155);
 }
 
 //randomizes what is on your grocery list
@@ -591,13 +599,38 @@ function title(){
   fill(0);
   textAlign(CENTER);
   textSize(70);
-  text("test", width/2, height/3);
+  text("Untitled Shopping Game", width/2, height/3);
+  fill(255);
   rectMode(CENTER);
   rect(width/2, height/2+height/4, 400, 200);
+  fill(0);
+  textSize(40);
+  text("PLAY", width/2, height/2+height/4);
 }
 
 function mousePressed(){
-  if (gameState === "titleScreen" && ){
-
+  if (gameState === "titleScreen" && mouseX > width/2-200 && mouseX < width/2+200 && mouseY < height/2+height/4+100 && mouseY > height/2+height/4-100){
+    clear();
+    gameState = "explain";
   }
+  if (gameState === "explain" && mouseX > width/2-200 && mouseX < width/2+200 && mouseY > height-225 && mouseY < height-75){
+    clear();
+    gameState = "game";
+  }
+}
+
+function explaination(){
+  background(0);
+  rectMode(CENTER);
+  fill(255);
+  rect(width/2-600, height/2-100, 500, 500);
+  rect(width/2, height/2-100, 500, 500);
+  rect(width/2+600, height/2-100, 500, 500);
+  textSize(30);
+  textAlign(CENTER);
+  text("Press 'space' to see your grocery list", width/2-600, height/2+200);
+  text("Press 'e' to pick up items", width/2-600, height/2+250);
+  text("Find all of the items", width/2, height/2+200);
+  text("Escape with all of the groceries", width/2+600, height/2+200);
+  rect(width/2, height-150, 400, 150);
 }
