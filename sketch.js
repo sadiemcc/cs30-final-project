@@ -25,8 +25,8 @@ function preload(){
 
 
   pickedUp = loadSound("Audios/pickedUp.wav");
-  titleMusic = loadSound("Audios/musics/titleScreen/Music_Loop_3_Full.wav");
-  gameMusic = loadSound("Audios/musics/inGame/Music_Loop_5_Full.wav");
+  gameMusic = loadSound("Audios/musics/titleScreen/Music_Loop_3_Full.wav");
+  walking = loadSound("Audios/walking.wav");
 }
 
 //PRODUCE VARIABLES
@@ -87,6 +87,7 @@ let itemHit = [];
 let interact = false;
 let hitting = false;
 let gameState = "titleScreen";
+let movementState;
 
 
 class Player{
@@ -101,18 +102,22 @@ class Player{
     //w
     if (keyIsDown(87) && this.y > 0 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.y -= this.speed;
+      movementState = true;
     }
     //a
     if (keyIsDown(65) && this.x > this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.x -= this.speed;
+      movementState = true;
     }
     //s
     if (keyIsDown(83) && this.y < height-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.y += this.speed;
+      movementState = true;
     }
     //d
     if (keyIsDown(68) && this.x < width-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.x += this.speed;
+      movementState = true;
     }
     if (keyIsDown(32) && !keyIsDown(70)){
       rectMode(CENTER);
@@ -121,6 +126,9 @@ class Player{
     }
     if (keyIsDown(70) && !keyIsDown(32)){
       viewCart();
+    }
+    else if (!keyIsDown(87) && !keyIsDown(65) && !keyIsDown(83) && !keyIsDown(68)){
+      movementState = false;
     }
     imageMode(CORNER);
   }
@@ -492,14 +500,11 @@ function keyPressed(){
 function setup() {
   getAudioContext().suspend();
   outputVolume(0.3);
-  if (gameState === "titleScreen"){
-    titleMusic.loop();
-    titleMusic.play(); 
+  if (movementState === true){
+    walking.play();
   }
-  else if (gameState === "game"){
-    gameMusic.loop();
-    gameMusic.play();
-  }
+  gameMusic.loop();
+  gameMusic.play(); 
   createCanvas(1912, 954);
   randomGroceryList();
 }
@@ -507,6 +512,7 @@ function setup() {
 let person = new Player(25, 875, 50);
 
 function draw() {
+  console.log(movementState);
   if (gameState === "game"){
     image(floorImg, 0, 0,width/4, height/2);
     image(floorImg, width/4, 0, width/4, height/2);
@@ -530,7 +536,10 @@ function draw() {
 }
 
 function mouseMoved(){
-  if (gameState === "titleScreen"){
+  // if (gameState === "titleScreen"){
+  //   userStartAudio();
+  // }
+  if (movementState === true){
     userStartAudio();
   }
 }
