@@ -22,6 +22,11 @@ function preload(){
 
   meatFish = loadImage("Drawings/meat-fish.png");
   meatGroundBeef = loadImage("Drawings/meat-groundbeef.png");
+
+
+  pickedUp = loadSound("Audios/pickedUp.wav");
+  titleMusic = loadSound("Audios/musics/titleScreen/Music_Loop_3_Full.wav");
+  gameMusic = loadSound("Audios/musics/inGame/Music_Loop_5_Full.wav");
 }
 
 //PRODUCE VARIABLES
@@ -478,12 +483,23 @@ function keyPressed(){
     for (let item = 0; item < chosenGroceryList.length; item++){
       if (itemHit[0] === chosenGroceryList[item] && inventory[item] !== itemHit[0]){
         inventory.push(itemHit[0]);
+        pickedUp.play();
       }
     }
   }
 }
 
 function setup() {
+  getAudioContext().suspend();
+  outputVolume(0.3);
+  if (gameState === "titleScreen"){
+    titleMusic.loop();
+    titleMusic.play(); 
+  }
+  else if (gameState === "game"){
+    gameMusic.loop();
+    gameMusic.play();
+  }
   createCanvas(1912, 954);
   randomGroceryList();
 }
@@ -511,6 +527,12 @@ function draw() {
     title();
   }
   // background(155);
+}
+
+function mouseMoved(){
+  if (gameState === "titleScreen"){
+    userStartAudio();
+  }
 }
 
 //randomizes what is on your grocery list
