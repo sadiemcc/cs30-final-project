@@ -26,7 +26,7 @@ function preload(){
 
   pickedUp = loadSound("Audios/pickedUp.wav");
   gameMusic = loadSound("Audios/musics/titleScreen/Music_Loop_3_Full.wav");
-  walking = loadSound("Audios/walking.wav");
+  walking = loadSound("Audios/walkingslowed.wav");
 }
 
 //PRODUCE VARIABLES
@@ -500,9 +500,6 @@ function keyPressed(){
 function setup() {
   getAudioContext().suspend();
   outputVolume(0.3);
-  if (movementState === true){
-    walking.play();
-  }
   gameMusic.loop();
   gameMusic.play(); 
   createCanvas(1912, 954);
@@ -513,6 +510,9 @@ let person = new Player(25, 875, 50);
 
 function draw() {
   console.log(movementState);
+  if (movementState === true && !walking.isPlaying()){
+    walking.play();
+  }
   if (gameState === "game"){
     image(floorImg, 0, 0,width/4, height/2);
     image(floorImg, width/4, 0, width/4, height/2);
@@ -526,9 +526,6 @@ function draw() {
     person.move();
     person.collision();
   }
-  if (gameState === "explain"){
-    explaination();
-  }
   if (gameState === "titleScreen"){
     title();
   }
@@ -536,10 +533,7 @@ function draw() {
 }
 
 function mouseMoved(){
-  // if (gameState === "titleScreen"){
-  //   userStartAudio();
-  // }
-  if (movementState === true){
+  if (gameState === "titleScreen"){
     userStartAudio();
   }
 }
@@ -641,27 +635,6 @@ function title(){
 
 function mousePressed(){
   if (gameState === "titleScreen" && mouseX > width/2-200 && mouseX < width/2+200 && mouseY < height/2+height/4+100 && mouseY > height/2+height/4-100){
-    clear();
-    gameState = "explain";
-  }
-  if (gameState === "explain" && mouseX > width/2-200 && mouseX < width/2+200 && mouseY > height-225 && mouseY < height-75){
-    clear();
     gameState = "game";
   }
-}
-
-function explaination(){
-  background(0);
-  rectMode(CENTER);
-  fill(255);
-  rect(width/2-600, height/2-100, 500, 500);
-  rect(width/2, height/2-100, 500, 500);
-  rect(width/2+600, height/2-100, 500, 500);
-  textSize(30);
-  textAlign(CENTER);
-  text("Press 'space' to see your grocery list", width/2-600, height/2+200);
-  text("Press 'e' to pick up items", width/2-600, height/2+250);
-  text("Find all of the items", width/2, height/2+200);
-  text("Escape with all of the groceries", width/2+600, height/2+200);
-  rect(width/2, height-150, 400, 150);
 }
