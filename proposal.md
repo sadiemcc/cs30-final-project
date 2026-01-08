@@ -10,7 +10,7 @@
 - ♥ Randomly generated grocery list 
 - ♥ Ability to hold up grocery list 
 - Front/back/sides player model
-- Sound effects
+- ♥ Sound effects
 
 ## Nice to Have
 - Self dialog (talk to yourself)

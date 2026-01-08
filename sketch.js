@@ -8,6 +8,7 @@
 
 function preload(){
   floorImg = loadImage("Drawings/floor.jpg");
+  walkTowards = loadImage("Drawings/walkTowards.gif");
 
   prodBin = loadImage("Drawings/produce-bin.png");
   prodApple = loadImage("Drawings/produce-apples.png");
@@ -97,8 +98,8 @@ class Player{
     this.radius = radius;
     this.speed = 5;
   }
-  
   move(){
+    fill(0, 0, 0, 0);
     //w
     if (keyIsDown(87) && this.y > 0 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       this.y -= this.speed;
@@ -111,6 +112,7 @@ class Player{
     }
     //s
     if (keyIsDown(83) && this.y < height-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
+      image(walkTowards, this.x, this.y, 75, 100);
       this.y += this.speed;
       movementState = true;
     }
