@@ -8,7 +8,8 @@
 
 function preload(){
   floorImg = loadImage("Drawings/floor.jpg");
-  walkTowards = loadImage("Drawings/walkTowards.gif");
+  walkTowards = loadImage("walkingAnimations/walkTowards.gif");
+  walkBack = loadImage("walkingAnimations/walkBack.gif");
 
   prodBin = loadImage("Drawings/produce-bin.png");
   prodApple = loadImage("Drawings/produce-apples.png");
@@ -102,6 +103,7 @@ class Player{
     fill(0, 0, 0, 0);
     //w
     if (keyIsDown(87) && this.y > 0 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
+      image(walkBack, this.x, this.y, 75, 100);
       this.y -= this.speed;
       movementState = true;
     }
