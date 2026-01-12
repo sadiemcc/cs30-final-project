@@ -1,15 +1,20 @@
 // Grocery Store Game
 
-//ADD COLLISION TO STOP MOVING WHEN COLLIDING
-//edit collision location (not in player class it runs constantly)
-//make individual images of the items to show in cart
-//make cart image
-//make text bubble images (for interaction)
+//TO DO
+//1. Add collision
+//2. Simplify code/ tidy
+//3. More shelving images
+//4. Make a game ending
+//5. Add pricing and randoize coins around store
 
 function preload(){
   floorImg = loadImage("Drawings/floor.jpg");
   walkTowards = loadImage("walkingAnimations/walkTowards.gif");
   walkBack = loadImage("walkingAnimations/walkBack.gif");
+  walkLeft = loadImage("walkingAnimations/walkLeft.gif");
+  walkRight = loadImage("walkingAnimations/walkRight.gif");
+  idle = loadImage("walkingAnimations/idleAnimation.gif");
+  basket = loadImage("Drawings/shoppingbasket.png");
 
   prodBin = loadImage("Drawings/produce-bin.png");
   prodApple = loadImage("Drawings/produce-apples.png");
@@ -101,6 +106,8 @@ class Player{
   }
   move(){
     fill(0, 0, 0, 0);
+    noStroke();
+    imageMode(CENTER);
     //w
     if (keyIsDown(87) && this.y > 0 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       image(walkBack, this.x, this.y, 75, 100);
@@ -109,6 +116,7 @@ class Player{
     }
     //a
     if (keyIsDown(65) && this.x > this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
+      image(walkLeft, this.x, this.y);
       this.x -= this.speed;
       movementState = true;
     }
@@ -120,25 +128,35 @@ class Player{
     }
     //d
     if (keyIsDown(68) && this.x < width-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
+      image(walkRight, this.x, this.y);
       this.x += this.speed;
       movementState = true;
     }
     if (keyIsDown(32) && !keyIsDown(70)){
+      image(idle, this.x, this.y);
+      stroke(0);
+      fill(255);
       rectMode(CENTER);
       rect(width/2, height/2, 400, 700);
+      noStroke();
       wordsOnList();
     }
     if (keyIsDown(70) && !keyIsDown(32)){
+      image(idle, this.x, this.y);
       viewCart();
     }
     else if (!keyIsDown(87) && !keyIsDown(65) && !keyIsDown(83) && !keyIsDown(68)){
+      image(idle, this.x, this.y);
       movementState = false;
     }
     imageMode(CORNER);
+    
   }
 
   collision(){
     rectMode(CORNER);
+    fill(0,0,0,0);
+    noStroke();
     circle(this.x, this.y, 50);
 
     //PRODUCE COLLISION
@@ -479,6 +497,7 @@ class Player{
       interact = false;
       hitting = false;
     }
+    stroke(0);
   }
 }
 
@@ -533,7 +552,6 @@ function draw() {
   if (gameState === "titleScreen"){
     title();
   }
-  // background(155);
 }
 
 function mouseMoved(){
@@ -559,11 +577,12 @@ function randomGroceryList(){
 
 //function that makes the chosenlist appear on the white rectangle
 function wordsOnList(){
-  fill(0);
+  fill(255);
   textAlign(CENTER);
   textSize(45);
   let listHeight = 200;
   let division = 100;
+  fill(0);
   for (let i = 0; i < chosenGroceryList.length; i++){
     text("- "+chosenGroceryList[i], width/2, height/2-listHeight);
     listHeight = listHeight - division;
@@ -619,8 +638,10 @@ function shelving(){
 }
 
 function viewCart(){
+  fill(255);
   rectMode(CENTER);
   rect(width/2, height/2, 1000, 600);
+  image(basket, width/2, height/2);
 }
 
 function title(){
@@ -641,4 +662,8 @@ function mousePressed(){
   if (gameState === "titleScreen" && mouseX > width/2-200 && mouseX < width/2+200 && mouseY < height/2+height/4+100 && mouseY > height/2+height/4-100){
     gameState = "game";
   }
+}
+
+function ending(){
+  // some sort of ending screen
 }
