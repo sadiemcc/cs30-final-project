@@ -108,8 +108,12 @@ class Player{
     fill(0, 0, 0, 0);
     noStroke();
     imageMode(CENTER);
+
+    let newX = this.x;
+    let newY = this.y;
+
     //w
-    if (keyIsDown(87) && this.y > 0 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
+    if (keyIsDown(87) && this.y > 0 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70) && newY !== hitting){
       image(walkBack, this.x, this.y, 75, 100);
       this.y -= this.speed;
       movementState = true;
