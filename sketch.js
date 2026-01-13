@@ -103,38 +103,69 @@ class Player{
     this.y = y;
     this.radius = radius;
     this.speed = 5;
+    this.newX = x;
+    this.newY = y;
   }
   move(){
     fill(0, 0, 0, 0);
     noStroke();
     imageMode(CENTER);
-
-    let newX = this.x;
-    let newY = this.y;
-
+    
     //w
-    if (keyIsDown(87) && this.y > 0 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70) && newY !== hitting){
+    if (keyIsDown(87) && this.y > 0 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
+      if (!hitting){
+        this.newY = this.y;
+        this.newX = this.x;
+        this.y -= this.speed;
+        movementState = true;
+      }
+      else if (hitting){
+        this.y = this.newY;
+        this.x = this.newX;
+      }
       image(walkBack, this.x, this.y, 75, 100);
-      this.y -= this.speed;
-      movementState = true;
     }
     //a
     if (keyIsDown(65) && this.x > this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
+      if (!hitting){
+        this.newY = this.y;
+        this.newX = this.x;
+        this.x -= this.speed;
+        movementState = true;
+      }
+      else if (hitting){
+        this.y = this.newY;
+        this.x = this.newX;
+      }
       image(walkLeft, this.x, this.y);
-      this.x -= this.speed;
-      movementState = true;
     }
     //s
     if (keyIsDown(83) && this.y < height-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
+      if (!hitting){
+        this.newY = this.y;
+        this.newX = this.x;
+        this.y += this.speed;
+        movementState = true;
+      }
+      else if (hitting){
+        this.y = this.newY;
+        this.x = this.newX;
+      }
       image(walkTowards, this.x, this.y, 75, 100);
-      this.y += this.speed;
-      movementState = true;
     }
     //d
     if (keyIsDown(68) && this.x < width-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
+      if (!hitting){
+        this.newY = this.y;
+        this.newX = this.x;
+        this.x += this.speed;
+        movementState = true;
+      }
+      else if (hitting){
+        this.y = this.newY;
+        this.x = this.newX;
+      }
       image(walkRight, this.x, this.y);
-      this.x += this.speed;
-      movementState = true;
     }
     if (keyIsDown(32) && !keyIsDown(70)){
       image(idle, this.x, this.y);
