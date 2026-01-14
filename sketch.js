@@ -478,7 +478,7 @@ function interactionUI(){
 function keyPressed(){
   if (key === 'e' && hitting === true){
     for (let item = 0; item < chosenGroceryList.length; item++){
-      if (itemHit[0] === chosenGroceryList[item] && inventory[item] !== itemHit[0]){
+      if (itemHit[0] === chosenGroceryList[item] && inventory[0] !== itemHit[0] && inventory[0] !== itemHit[1] && inventory[0] !== itemHit[2] && inventory[0] !== itemHit[3] && inventory[0] !== itemHit[4]){
         inventory.push(itemHit[0]);
         pickedUp.play();
       }
@@ -522,7 +522,12 @@ function draw() {
     image(floorImg, width/2+width/4, height/2, width/4, height/2);
     shelving();
     person.move();
-    person.collision();
+    person.collision(); 
+    for (let item = 0; item < inventory.length; item++){
+      if (inventory[item] === chosenGroceryList[0] && inventory[item] === chosenGroceryList[1] && inventory[item] === chosenGroceryList[2] && inventory[item] === chosenGroceryList[3] && inventory[item] === chosenGroceryList[4]){
+        ending();
+      }
+    }
   }
   if (gameState === "titleScreen"){
     title();
@@ -617,6 +622,10 @@ function viewCart(){
   rectMode(CENTER);
   rect(width/2, height/2, 1000, 600);
   image(basket, width/2, height/2);
+
+  for (let i = 0; i < inventory; i++){
+    if (inventory[i] === chosenGroceryList){}
+  }
 }
 
 function title(){
@@ -642,5 +651,6 @@ function mousePressed(){
 }
 
 function ending(){
-  
+  clear();
+  rect(width/2, height/2, 500, 200);
 }
