@@ -1,7 +1,6 @@
 // Grocery Store Game
 
 //TO DO
-//1. Add collision
 //2. Simplify code/ tidy
 //3. More shelving images
 //4. Make a game ending
@@ -128,14 +127,14 @@ class Player{
     //a
     if (keyIsDown(65) && this.x > this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       if (!hitting){
-        this.newY = this.y;
         this.newX = this.x;
+        this.newY = this.y;
         this.x -= this.speed;
         movementState = true;
       }
       else if (hitting){
-        this.y = this.newY;
         this.x = this.newX;
+        this.y = this.newY;
       }
       image(walkLeft, this.x, this.y);
     }
@@ -156,14 +155,14 @@ class Player{
     //d
     if (keyIsDown(68) && this.x < width-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
       if (!hitting){
-        this.newY = this.y;
         this.newX = this.x;
+        this.newY = this.y;
         this.x += this.speed;
         movementState = true;
       }
       else if (hitting){
-        this.y = this.newY;
         this.x = this.newX;
+        this.y = this.newY;
       }
       image(walkRight, this.x, this.y);
     }
@@ -198,12 +197,17 @@ class Player{
     hitOrange = collideRectCircle(width-500, 650, 100, 100, this.x, this.y, this.radius);
     hitApple = collideRectCircle(width-400, 650, 100, 100, this.x, this.y, this.radius);
     hitBanana = collideRectCircle(width-300, 650, 100, 100, this.x, this.y, this.radius);
+
+    let hit3Fruits = collideRectCircle(width-500, 650, 300, 100, this.x, this.y, this.radius);
+
     hitPotato = collideRectCircle(width-700, height-100, 100, 100, this.x, this.y, this.radius);
     hitOnion = collideRectCircle(width-600, height-100, 100, 100, this.x, this.y, this.radius);
     hitPepper = collideRectCircle(width-500, height-100, 100, 100, this.x, this.y, this.radius);
     hitLettuce = collideRectCircle(width-400, height-100, 100, 100, this.x, this.y, this.radius);
     hitTomato = collideRectCircle(width-300, height-100, 100, 100, this.x, this.y, this.radius);
     hitCarrot = collideRectCircle(width-200, height-100, 100, 100, this.x, this.y, this.radius);
+
+    let hitProduce = collideRectCircle(width-700, height-100, 700, 100, this.x, this.y, this.radius);
 
     //MEAT COLLISION
     hitShrimp = collideRectCircle(0, height/2-200, 100, 100, this.x, this.y, this.radius);
@@ -239,292 +243,238 @@ class Player{
     fill(0, 0, 0, 0);
     textSize(30);
 
-    if (hitOrange === true && !hitApple){
-      itemHit.push("oranges");
+    if (hit3Fruits === true){
+      rect(width-500, 650, 300, 100);
+      hitting = true;
+    }
+    if (hitProduce === true){
+      hitting = true;
       stroke("yellow");
-      fill(0, 0, 0, 0);
+      rect(width-700, height-100, 700, 100);
+    }
+
+    if (hitOrange === true && !hitApple){
+      hitting = true;
+      itemHit.push("oranges");
       rect(width-500, 650, 100, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitApple === true && !hitBanana && !hitOrange){
+      hitting = true;
       itemHit.push("apples");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width-400, 650, 100, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitBanana === true && !hitApple){
+      hitting = true;
       itemHit.push("bananas");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width-300, 650, 100, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitPotato === true && !hitOnion){
+      hitting = true;
       itemHit.push("potatoes");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width-700, height-100, 100, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitOnion === true && !hitPotato && !hitPepper){
+      hitting = true;
       itemHit.push("onions");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width-600, height-100, 100, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitPepper === true && !hitOnion && !hitLettuce){
+      hitting = true;
       itemHit.push("bell peppers");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width-500, height-100, 100, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitLettuce === true && !hitPepper && !hitTomato){
+      hitting = true;
       itemHit.push("lettuce");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width-400, height-100, 100, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitTomato === true && !hitLettuce && !hitCarrot){
+      hitting = true;
       itemHit.push("tomatoes");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width-300, height-100, 100, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitCarrot === true && !hitTomato){
+      hitting = true;
       itemHit.push("carrots");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width-200, height-100, 100, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitShrimp === true && !hitBacon){
+      hitting = true;
       itemHit.push("shrimp");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(0, height/2-200, 100, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitBacon === true && !hitShrimp && !hitGroundBeef){
+      hitting = true;
       itemHit.push("bacon");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(0, height/2-100, 100, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitGroundBeef === true && !hitBacon && !hitSausages){
+      hitting = true;
       itemHit.push("ground beef");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(0, height/2, 100, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitSausages === true && !hitGroundBeef && !hitFish){
+      hitting = true;
       itemHit.push("sausages");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(0, height/2+100, 100, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitFish === true && !hitSausages){
+      hitting = true;
       itemHit.push("fish");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(0, height/2+200, 100, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitFrozenPizza === true && !hitIceCream){
+      hitting = true;
       itemHit.push("frozen pizza");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(0, 0, width/6, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitIceCream === true && !hitFrozenPizza && !hitPizzaPops){
+      hitting = true;
       itemHit.push("ice cream");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width/6, 0, width/6, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitPizzaPops === true && !hitIceCream && !hitFrozenVeggies){
+      hitting = true;
       itemHit.push("pizza pops");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width/6*2, 0, width/6, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitFrozenVeggies === true && !hitPizzaPops && !hitFrozenFruit){
+      hitting = true;
       itemHit.push("frozen veggies");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width/6*3, 0, width/6, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitFrozenFruit === true && !hitFrozenVeggies){
+      hitting = true;
       itemHit.push("frozen fruit");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width/6*4, 0, width/6, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitCereal === true && !hitCookies){
+      hitting = true;
       itemHit.push("cereal");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(300, 225, 450, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitCookies === true && !hitCereal && !hitPasta){
+      hitting = true;
       itemHit.push("cookies");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(750, 225, 450, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitPasta === true && !hitCookies && !hitChips){
+      hitting = true;
       itemHit.push("pasta");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(1200, 225, 450, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitChips === true && !hitPasta && !hitSoup){
+      hitting = true;
       itemHit.push("chips");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(300, 450, 450, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitSoup === true && !hitChips && !hitFlour){
+      hitting = true;
       itemHit.push("soup");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(750, 450, 450, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitFlour === true && !hitSoup && !hitSugar){
+      hitting = true;
       itemHit.push("flour");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(1200, 450, 450, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitSugar === true && !hitFlour && !hitCrackers){
+      hitting = true;
       itemHit.push("sugar");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(300, 650, 500, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitCrackers === true && !hitSugar){
+      hitting = true;
       itemHit.push("crackers");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(800, 650, 500, 100);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitButter === true && !hitCheese){
+      hitting = true;
       itemHit.push("butter");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width-100, 0, 100, 754/5);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitCheese === true && !hitButter && !hitEggs){
+      hitting = true;
       itemHit.push("cheese");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width-100, 754/5, 100, 754/5);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitEggs === true && !hitCheese && !hitMilk){
+      hitting = true;
       itemHit.push("eggs");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width-100, 754/5*2, 100, 754/5);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitMilk === true && !hitEggs && !hitYogurt){
+      hitting = true;
       itemHit.push("milk");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width-100, 754/5*3, 100, 754/5);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     if (hitYogurt === true && !hitMilk){
+      hitting = true;
       itemHit.push("yogurt");
-      stroke("yellow");
-      fill(0, 0, 0, 0);
       rect(width-100, 754/5*4, 100, 754/5);
       interactionUI();
-      stroke(0);
       return itemHit;
     }
     else{
@@ -537,7 +487,6 @@ class Player{
 }
 
 function interactionUI(){
-  hitting = true;
   fill(0);
   textSize(30);
   noStroke();
@@ -552,6 +501,15 @@ function keyPressed(){
         pickedUp.play();
       }
     }
+  }
+  if (key === 'i' && gameState === "titleScreen"){
+    gameState = "instructions";
+    fill(255);
+    rectMode(CENTER);
+    rect(width/2, height/2, width-400, height-100);
+  }
+  else if (key === 'i' && gameState === "instructions"){
+    gameState = "titleScreen";
   }
 }
 
@@ -691,6 +649,8 @@ function title(){
   fill(0);
   textSize(40);
   text("PLAY", width/2, height/2+height/4);
+  textSize(25);
+  text("Press 'i' for instructions", width/2, height/2+100);
 }
 
 function mousePressed(){
