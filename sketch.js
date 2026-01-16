@@ -512,7 +512,6 @@ function setup() {
   gameMusic.loop();
   gameMusic.play(); 
   createCanvas(1912, 954);
-  randomGroceryList();
 }
 
 let person = new Player(25, 875, 50);
@@ -541,6 +540,7 @@ function draw() {
     }
   }
   if (gameState === "titleScreen"){
+    chosenGroceryList = [];
     title();
   }
 }
@@ -641,6 +641,7 @@ function viewCart(){
 }
 
 function title(){
+  inventory = [];
   textFont(font);
   background("pink");
   fill(0);
@@ -659,7 +660,17 @@ function title(){
 
 function mousePressed(){
   if (gameState === "titleScreen" && mouseX > width/2-200 && mouseX < width/2+200 && mouseY < height/2+height/4+100 && mouseY > height/2+height/4-100){
+    randomGroceryList();
     gameState = "game";
+  }
+  if (gameState === "pause" && mouseX > width/2-160-275 && mouseX < width/2-160+275 && mouseY > height/2-75 && mouseY < height/2-25+100){
+    person.x = 25;
+    person.y = 875;
+  }
+  if (gameState === "pause" && mouseX > width/2-160-275 && mouseX < width/2-160+275 && mouseY > height/2+50 && mouseY < height/2+150){
+    gameState = "titleScreen";
+    clear();
+    title();
   }
 }
 
@@ -676,15 +687,17 @@ function menu(){
   fill(255, 245, 153);
   rect(width/2, height/2, 700, 350);
   textSize(60);
-  fill(0);
-  text("MENU", width/2, height/2-115);
   fill(255);
   rect(width/2-160, height/2-25, 275, 100);
-  textAlign(CENTER);
-  textSize(30);
-  fill(0);
-  text("I'M STUCK!!", width/2-160, height/2-25);
   rect(width/2+160, height/2-25, 275, 100);
   rect(width/2-160, height/2+100, 275, 100);
   rect(width/2+160, height/2+100, 275, 100);
+  fill(0);
+  text("MENU", width/2, height/2-115);
+  textAlign(CENTER);
+  textSize(30);
+  text("I'M STUCK!!", width/2-160, height/2-15);
+  text("INSTRUCTIONS", width/2+160, height/2-15);
+  text("BACK TO HOME", width/2-160, height/2+110);
+  text("INSTRUCTIONS", width/2+160, height/2-15);
 }
