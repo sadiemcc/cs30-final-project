@@ -4,7 +4,6 @@
 //2. Simplify code/ tidy
 //3. More shelving images
 //4. Make a game ending
-//5. Add pricing and randoize coins around store
 
 function preload(){
   floorImg = loadImage("Drawings/floor.jpg");
@@ -92,6 +91,7 @@ let items;
 let itemHit = [];
 let interact = false;
 let hitting = false;
+let UIhit = false;
 let gameState = "titleScreen";
 let movementState;
 
@@ -112,57 +112,53 @@ class Player{
     
     //w
     if (keyIsDown(87) && this.y > 0 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
-      if (!hitting){
-        this.newY = this.y;
-        this.newX = this.x;
-        this.y -= this.speed;
-        movementState = true;
-      }
-      else if (hitting){
+      if (hitting){
         this.y = this.newY;
         this.x = this.newX;
+      }
+      else if (!hitting){
+        this.newY = this.y;
+        this.y -= this.speed;
+        movementState = true;
       }
       image(walkBack, this.x, this.y, 75, 100);
     }
     //a
     if (keyIsDown(65) && this.x > this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
-      if (!hitting){
-        this.newX = this.x;
-        this.newY = this.y;
-        this.x -= this.speed;
-        movementState = true;
-      }
-      else if (hitting){
+      if (hitting){
         this.x = this.newX;
         this.y = this.newY;
+      }
+      else if (!hitting){
+        this.newX = this.x;
+        this.x -= this.speed;
+        movementState = true;
       }
       image(walkLeft, this.x, this.y);
     }
     //s
     if (keyIsDown(83) && this.y < height-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
-      if (!hitting){
-        this.newY = this.y;
-        this.newX = this.x;
-        this.y += this.speed;
-        movementState = true;
-      }
-      else if (hitting){
+      if (hitting){
         this.y = this.newY;
         this.x = this.newX;
+      }
+      else if (!hitting){
+        this.newY = this.y;
+        this.y += this.speed;
+        movementState = true;
       }
       image(walkTowards, this.x, this.y, 75, 100);
     }
     //d
     if (keyIsDown(68) && this.x < width-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
-      if (!hitting){
-        this.newX = this.x;
-        this.newY = this.y;
-        this.x += this.speed;
-        movementState = true;
-      }
-      else if (hitting){
+      if (hitting){
         this.x = this.newX;
         this.y = this.newY;
+      }
+      else if (!hitting){
+        this.newX = this.x;
+        this.x += this.speed;
+        movementState = true;
       }
       image(walkRight, this.x, this.y);
     }
@@ -198,16 +194,12 @@ class Player{
     hitApple = collideRectCircle(width-400, 650, 100, 100, this.x, this.y, this.radius);
     hitBanana = collideRectCircle(width-300, 650, 100, 100, this.x, this.y, this.radius);
 
-    let hit3Fruits = collideRectCircle(width-500, 650, 300, 100, this.x, this.y, this.radius);
-
-    hitPotato = collideRectCircle(width-700, height-100, 100, 100, this.x, this.y, this.radius);
+    hitPotato = collideRectCircle(width-700, height-100, 115, 100, this.x, this.y, this.radius);
     hitOnion = collideRectCircle(width-600, height-100, 100, 100, this.x, this.y, this.radius);
     hitPepper = collideRectCircle(width-500, height-100, 100, 100, this.x, this.y, this.radius);
     hitLettuce = collideRectCircle(width-400, height-100, 100, 100, this.x, this.y, this.radius);
     hitTomato = collideRectCircle(width-300, height-100, 100, 100, this.x, this.y, this.radius);
     hitCarrot = collideRectCircle(width-200, height-100, 100, 100, this.x, this.y, this.radius);
-
-    let hitProduce = collideRectCircle(width-700, height-100, 700, 100, this.x, this.y, this.radius);
 
     //MEAT COLLISION
     hitShrimp = collideRectCircle(0, height/2-200, 100, 100, this.x, this.y, this.radius);
@@ -243,16 +235,6 @@ class Player{
     fill(0, 0, 0, 0);
     textSize(30);
 
-    if (hit3Fruits === true){
-      rect(width-500, 650, 300, 100);
-      hitting = true;
-    }
-    if (hitProduce === true){
-      hitting = true;
-      stroke("yellow");
-      rect(width-700, height-100, 700, 100);
-    }
-
     if (hitOrange === true && !hitApple){
       hitting = true;
       itemHit.push("oranges");
@@ -274,35 +256,35 @@ class Player{
       interactionUI();
       return itemHit;
     }
-    if (hitPotato === true && !hitOnion){
+    if (hitPotato === true){
       hitting = true;
       itemHit.push("potatoes");
       rect(width-700, height-100, 100, 100);
       interactionUI();
       return itemHit;
     }
-    if (hitOnion === true && !hitPotato && !hitPepper){
+    if (hitOnion === true && !hitPotato){
       hitting = true;
       itemHit.push("onions");
       rect(width-600, height-100, 100, 100);
       interactionUI();
       return itemHit;
     }
-    if (hitPepper === true && !hitOnion && !hitLettuce){
+    if (hitPepper === true && !hitOnion){
       hitting = true;
       itemHit.push("bell peppers");
       rect(width-500, height-100, 100, 100);
       interactionUI();
       return itemHit;
     }
-    if (hitLettuce === true && !hitPepper && !hitTomato){
+    if (hitLettuce === true && !hitPepper){
       hitting = true;
       itemHit.push("lettuce");
       rect(width-400, height-100, 100, 100);
       interactionUI();
       return itemHit;
     }
-    if (hitTomato === true && !hitLettuce && !hitCarrot){
+    if (hitTomato === true && !hitLettuce){
       hitting = true;
       itemHit.push("tomatoes");
       rect(width-300, height-100, 100, 100);
@@ -496,7 +478,7 @@ function interactionUI(){
 function keyPressed(){
   if (key === 'e' && hitting === true){
     for (let item = 0; item < chosenGroceryList.length; item++){
-      if (itemHit[0] === chosenGroceryList[item] && inventory[item] !== itemHit[0]){
+      if (itemHit[0] === chosenGroceryList[item] && inventory[0] !== itemHit[0] && inventory[0] !== itemHit[1] && inventory[0] !== itemHit[2] && inventory[0] !== itemHit[3] && inventory[0] !== itemHit[4]){
         inventory.push(itemHit[0]);
         pickedUp.play();
       }
@@ -540,7 +522,12 @@ function draw() {
     image(floorImg, width/2+width/4, height/2, width/4, height/2);
     shelving();
     person.move();
-    person.collision();
+    person.collision(); 
+    for (let item = 0; item < inventory.length; item++){
+      if (inventory[item] === chosenGroceryList[0] && inventory[item] === chosenGroceryList[1] && inventory[item] === chosenGroceryList[2] && inventory[item] === chosenGroceryList[3] && inventory[item] === chosenGroceryList[4]){
+        ending();
+      }
+    }
   }
   if (gameState === "titleScreen"){
     title();
@@ -577,7 +564,7 @@ function wordsOnList(){
   let division = 100;
   fill(0);
   for (let i = 0; i < chosenGroceryList.length; i++){
-    text("- "+chosenGroceryList[i], width/2, height/2-listHeight);
+    text("- " + chosenGroceryList[i], width/2, height/2-listHeight);
     listHeight = listHeight - division;
   }
   fill(255);
@@ -635,6 +622,10 @@ function viewCart(){
   rectMode(CENTER);
   rect(width/2, height/2, 1000, 600);
   image(basket, width/2, height/2);
+
+  for (let i = 0; i < inventory; i++){
+    if (inventory[i] === chosenGroceryList){}
+  }
 }
 
 function title(){
@@ -660,5 +651,6 @@ function mousePressed(){
 }
 
 function ending(){
-  // some sort of ending screen
+  clear();
+  rect(width/2, height/2, 500, 200);
 }
