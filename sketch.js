@@ -32,6 +32,9 @@ function preload(){
   pickedUp = loadSound("Audios/pickedUp.wav");
   gameMusic = loadSound("Audios/musics/titleScreen/Music_Loop_3_Full.wav");
   walking = loadSound("Audios/walkingslowed.wav");
+
+
+  font = loadFont("Funzytoon.ttf");
 }
 
 //PRODUCE VARIABLES
@@ -469,6 +472,7 @@ class Player{
 }
 
 function interactionUI(){
+  textFont(font);
   fill(0);
   textSize(30);
   noStroke();
@@ -478,11 +482,18 @@ function interactionUI(){
 function keyPressed(){
   if (key === 'e' && hitting === true){
     for (let item = 0; item < chosenGroceryList.length; item++){
-      if (itemHit[0] === chosenGroceryList[item] && inventory[0] !== itemHit[0] && inventory[0] !== itemHit[1] && inventory[0] !== itemHit[2] && inventory[0] !== itemHit[3] && inventory[0] !== itemHit[4]){
+      if (itemHit[0] === chosenGroceryList[item] && inventory[0] !== itemHit[0] && inventory[1] !== itemHit[0] && inventory[2] !== itemHit[0] && inventory[3] !== itemHit[0] && inventory[4] !== itemHit[0]){
         inventory.push(itemHit[0]);
         pickedUp.play();
       }
     }
+  }
+  if (keyCode === 27 && gameState === "game"){
+    gameState = "pause";
+    menu();
+  }
+  else if (keyCode === 27 && gameState === "pause"){
+    gameState = "game";
   }
   if (key === 'i' && gameState === "titleScreen"){
     gameState = "instructions";
@@ -557,6 +568,7 @@ function randomGroceryList(){
 
 //function that makes the chosenlist appear on the white rectangle
 function wordsOnList(){
+  textFont(font);
   fill(255);
   textAlign(CENTER);
   textSize(45);
@@ -629,10 +641,11 @@ function viewCart(){
 }
 
 function title(){
+  textFont(font);
   background("pink");
   fill(0);
   textAlign(CENTER);
-  textSize(70);
+  textSize(100);
   text("Untitled Shopping Game", width/2, height/3);
   fill(255);
   rectMode(CENTER);
@@ -653,4 +666,25 @@ function mousePressed(){
 function ending(){
   clear();
   rect(width/2, height/2, 500, 200);
+}
+
+function menu(){
+  textFont(font);
+  rectMode(CENTER);
+  fill(0,0,0,100);
+  rect(width/2, height/2, width, height);
+  fill(255, 245, 153);
+  rect(width/2, height/2, 700, 350);
+  textSize(60);
+  fill(0);
+  text("MENU", width/2, height/2-115);
+  fill(255);
+  rect(width/2-160, height/2-25, 275, 100);
+  textAlign(CENTER);
+  textSize(30);
+  fill(0);
+  text("I'M STUCK!!", width/2-160, height/2-25);
+  rect(width/2+160, height/2-25, 275, 100);
+  rect(width/2-160, height/2+100, 275, 100);
+  rect(width/2+160, height/2+100, 275, 100);
 }
