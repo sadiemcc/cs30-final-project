@@ -106,7 +106,6 @@ let UIhit = false;
 let gameState = "titleScreen";
 let movementState;
 
-
 class Player{
   constructor(x, y, radius){
     this.x = x;
@@ -525,7 +524,7 @@ function setup() {
 let person = new Player(25, 875, 50);
 
 function draw() {
-  console.log(movementState);
+  console.log(gameState);
   if (movementState === true && !walking.isPlaying()){
     walking.play();
   }
@@ -541,10 +540,9 @@ function draw() {
     shelving();
     person.move();
     person.collision(); 
-    for (let item = 0; item < inventory.length; item++){
-      if (inventory[item] === chosenGroceryList[0] && inventory[item] === chosenGroceryList[1] && inventory[item] === chosenGroceryList[2] && inventory[item] === chosenGroceryList[3] && inventory[item] === chosenGroceryList[4]){
-        ending();
-      }
+    if (inventory.length === 5){
+      gameState = "ending";
+      ending();
     }
   }
   if (gameState === "titleScreen"){
@@ -601,7 +599,9 @@ function shelving(){
   rect(0, height/2+200, 100, 100);
   //blue shelves = freezer
   fill(226, 234, 252);
+  "frozen pizza", "ice cream", "pizza pops", "frozen veggies", "frozen fruit"
   rect(0, 0, width/6, 100);
+  image
   rect(width/6, 0, width/6, 100);
   rect(width/6*2, 0, width/6, 100);
   rect(width/6*3, 0, width/6, 100);
@@ -683,7 +683,9 @@ function mousePressed(){
 
 function ending(){
   clear();
-  rect(width/2, height/2, 500, 200);
+  background(255, 229, 144);
+  textSize(100);
+  text("CONGRATULATIONS!!", width/2, height/2-200);
 }
 
 function menu(){
