@@ -28,6 +28,14 @@ function preload(){
   meatFish = loadImage("Drawings/meat-fish.png");
   meatGroundBeef = loadImage("Drawings/meat-groundbeef.png");
 
+  dryCereal = loadImage("Drawings/dry-cereal.png");
+  dryCookies = loadImage("Drawings/dry-cookies.png");
+  dryPasta = loadImage("Drawings/dry-pasta.png");
+  dryChips = loadImage("Drawings/dry-chips.png");
+  drySoup = loadImage("Drawings/dry-soup.png");
+  dryFlour = loadImage("Drawings/dry-flour.png");
+  drySugar = loadImage("Drawings/dry-sugar.png");
+  dryCrackers = loadImage("Drawings/dry-crackers.png");
 
   pickedUp = loadSound("Audios/pickedUp.wav");
   gameMusic = loadSound("Audios/musics/titleScreen/Music_Loop_3_Full.wav");
@@ -606,15 +614,14 @@ function shelving(){
   rect(width-100, 754/5*3, 100, 754/5);
   rect(width-100, 754/5*4, 100, 754/5);
   //yellow shelves = dry goods
-  fill(255, 246, 204);
-  rect(300, 225, 450, 100);
-  rect(750, 225, 450, 100);
-  rect(1200, 225, 450, 100);
-  rect(300, 450, 450, 100);
-  rect(750, 450, 450, 100);
-  rect(1200, 450, 450, 100);
-  rect(300, 650, 500, 100);
-  rect(800, 650, 500, 100);
+  image(dryCereal, 300, 225);
+  image(dryCookies, 750, 225);
+  image(dryPasta, 1200, 225);
+  image(dryChips, 300, 450);
+  image(drySoup, 750, 450);
+  image(dryFlour, 1200, 450);
+  image(drySugar, 300, 650, 500);
+  image(dryCrackers, 800, 650, 500);
   //green shelves = produce
   fill(221, 229, 182);
   image(prodPotatoes, width-700, height-100);
