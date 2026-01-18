@@ -28,6 +28,12 @@ function preload(){
   meatFish = loadImage("Drawings/meat-fish.png");
   meatGroundBeef = loadImage("Drawings/meat-groundbeef.png");
 
+  frozenPizza = loadImage("Drawings/frozen-pizza.png");
+  frozenIceCream = loadImage("Drawings/frozen-icecream.png");
+  frozenPizzaPops = loadImage("Drawings/frozen-pizzapops.png");
+  frozenVeggies = loadImage("Drawings/frozen-veggies.png");
+  frozenFruit = loadImage("Drawings/frozen-fruit.png");
+
   dryCereal = loadImage("Drawings/dry-cereal.png");
   dryCookies = loadImage("Drawings/dry-cookies.png");
   dryPasta = loadImage("Drawings/dry-pasta.png");
@@ -87,6 +93,16 @@ let hitEggs = false;
 let hitMilk = false;
 let hitYogurt = false;
 
+//SHELVING VARIABLES
+let hitFrozen = false;
+let hitMeat = false;
+let hitDairy = false;
+let hitDry1 = false;
+let hitDry2 = false;
+let hitDry3 = false;
+let hitProduce1 = false;
+let hitProduce2 = false;
+
 let departments = {
   produce: ["apples", "bananas", "oranges", "potatoes", "tomatoes", "onions", "bell peppers", "lettuce", "carrots"],
   freezer: ["frozen pizza", "ice cream", "pizza pops", "frozen veggies", "frozen fruit"],
@@ -102,6 +118,7 @@ let items;
 let itemHit = [];
 let interact = false;
 let hitting = false;
+let colliding = false;
 let UIhit = false;
 let gameState = "titleScreen";
 let movementState;
@@ -122,11 +139,11 @@ class Player{
     
     //w
     if (keyIsDown(87) && this.y > 0 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
-      if (hitting){
+      if (colliding){
         this.y = this.newY;
         this.x = this.newX;
       }
-      else if (!hitting){
+      else if (!colliding){
         this.newY = this.y;
         this.y -= this.speed;
         movementState = true;
@@ -135,11 +152,11 @@ class Player{
     }
     //a
     if (keyIsDown(65) && this.x > this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
-      if (hitting){
+      if (colliding){
         this.x = this.newX;
         this.y = this.newY;
       }
-      else if (!hitting){
+      else if (!colliding){
         this.newX = this.x;
         this.x -= this.speed;
         movementState = true;
@@ -148,11 +165,11 @@ class Player{
     }
     //s
     if (keyIsDown(83) && this.y < height-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
-      if (hitting){
+      if (colliding){
         this.y = this.newY;
         this.x = this.newX;
       }
-      else if (!hitting){
+      else if (!colliding){
         this.newY = this.y;
         this.y += this.speed;
         movementState = true;
@@ -161,11 +178,11 @@ class Player{
     }
     //d
     if (keyIsDown(68) && this.x < width-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
-      if (hitting){
+      if (colliding){
         this.x = this.newX;
         this.y = this.newY;
       }
-      else if (!hitting){
+      else if (!colliding){
         this.newX = this.x;
         this.x += this.speed;
         movementState = true;
@@ -200,10 +217,9 @@ class Player{
     circle(this.x, this.y, 50);
 
     //PRODUCE COLLISION
-    hitOrange = collideRectCircle(width-500, 650, 100, 100, this.x, this.y, this.radius);
-    hitApple = collideRectCircle(width-400, 650, 100, 100, this.x, this.y, this.radius);
+    hitOrange = collideRectCircle(width-525, 675, 150, 150, this.x, this.y, this.radius);
+    hitApple = collideRectCircle(width-425, 675, 150, 150, this.x, this.y, this.radius);
     hitBanana = collideRectCircle(width-300, 650, 100, 100, this.x, this.y, this.radius);
-
     hitPotato = collideRectCircle(width-700, height-100, 115, 100, this.x, this.y, this.radius);
     hitOnion = collideRectCircle(width-600, height-100, 100, 100, this.x, this.y, this.radius);
     hitPepper = collideRectCircle(width-500, height-100, 100, 100, this.x, this.y, this.radius);
@@ -242,13 +258,28 @@ class Player{
     hitMilk = collideRectCircle(width-100, 754/5*3, 100, 754/5, this.x, this.y, this.radius);
     hitYogurt = collideRectCircle(width-100, 754/5*4, 100, 754/5, this.x, this.y, this.radius);
 
+    //SHELVING COLLISION
+    rectMode(CORNER);
+    hitFrozen = collideRectCircle(0, 0, width/6*5, 100, this.x, this.y, this.radius);
+    hitMeat = collideRectCircle(0, height/2-200, 100, 500, this.x, this.y, this.radius);
+    hitDairy = collideRectCircle(width-100, 0, 100, height/5*4, this.x, this.y, this.radius);
+    hitDry1 = collideRectCircle(300, 225, 1350, 100, this.x, this.y, this.radius);
+    hitDry2 = collideRectCircle(300, 450, 1350, 100, this.x, this.y, this.radius);
+    hitDry3 = collideRectCircle(300, 650, 1000, 100, this.x, this.y, this.radius);
+    hitProduce1 = collideRectCircle(width-500, 650, 500, 100, this.x, this.y, this.radius);
+    hitProduce2 = collideRectCircle(width-700, height-100, 700, 100, this.x, this.y, this.radius);
+
     fill(0, 0, 0, 0);
     textSize(30);
+    if (hitFrozen || hitMeat || hitDairy || hitDry1 || hitDry2 || hitDry3 || hitProduce1 || hitProduce2){
+      colliding = true;
+    }
 
     if (hitOrange === true && !hitApple){
       hitting = true;
       itemHit.push("oranges");
-      rect(width-500, 650, 100, 100);
+      fill(25);
+      rect(width-525, 625, 125, 150);
       interactionUI();
       return itemHit;
     }
@@ -473,6 +504,7 @@ class Player{
       itemHit = [];
       interact = false;
       hitting = false;
+      colliding = false;
     }
     stroke(0);
   }
@@ -581,11 +613,12 @@ function wordsOnList(){
   let listHeight = 200;
   let division = 100;
   fill(0);
+  if (inventory[0] )
+    fill(255);
   for (let i = 0; i < chosenGroceryList.length; i++){
     text("- " + chosenGroceryList[i], width/2, height/2-listHeight);
     listHeight = listHeight - division;
   }
-  fill(255);
 }
 
 function shelving(){
@@ -598,14 +631,11 @@ function shelving(){
   rect(0, height/2+100, 100, 100);
   rect(0, height/2+200, 100, 100);
   //blue shelves = freezer
-  fill(226, 234, 252);
-  "frozen pizza", "ice cream", "pizza pops", "frozen veggies", "frozen fruit"
-  rect(0, 0, width/6, 100);
-  image
-  rect(width/6, 0, width/6, 100);
-  rect(width/6*2, 0, width/6, 100);
-  rect(width/6*3, 0, width/6, 100);
-  rect(width/6*4, 0, width/6, 100);
+  image(frozenPizza, 0, 0, width/6, 125);
+  image(frozenIceCream, width/6, 0, width/6, 125);
+  image(frozenPizzaPops, width/6*2, 0, width/6, 125);
+  image(frozenVeggies, width/6*3, 0, width/6, 125);
+  image(frozenFruit, width/6*4, 0, width/6, 125);
   //orange shelves = dairy
   fill(249, 199, 132);
   rect(width-100, 0, 100, 754/5);
@@ -637,13 +667,18 @@ function shelving(){
 }
 
 function viewCart(){
-  fill(255);
-  rectMode(CENTER);
-  rect(width/2, height/2, 1000, 600);
-  image(basket, width/2, height/2);
+  background(255);
+  image(basket, width/2-400, height/2+150);
+  textSize(100);
+  fill(0);
+  text("IN BASKET", width/2, 200);
+  fill(	255, 133, 161);
+  rect(width-700, height/2-100, 500, 500);
 
-  for (let i = 0; i < inventory; i++){
-    if (inventory[i] === chosenGroceryList){}
+  textSize(50);
+  fill(0);
+  if (inventory.length === 1){
+    text("-" + inventory[0], width-600, height/2);
   }
 }
 
