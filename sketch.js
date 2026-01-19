@@ -217,8 +217,8 @@ class Player{
     circle(this.x, this.y, 50);
 
     //PRODUCE COLLISION
-    hitOrange = collideRectCircle(width-525, 675, 150, 150, this.x, this.y, this.radius);
-    hitApple = collideRectCircle(width-425, 675, 150, 150, this.x, this.y, this.radius);
+    hitOrange = collideRectCircle(width-500, 650, 100, 100, this.x, this.y, this.radius);
+    hitApple = collideRectCircle(width-400, 650, 100, 100, this.x, this.y, this.radius);
     hitBanana = collideRectCircle(width-300, 650, 100, 100, this.x, this.y, this.radius);
     hitPotato = collideRectCircle(width-700, height-100, 115, 100, this.x, this.y, this.radius);
     hitOnion = collideRectCircle(width-600, height-100, 100, 100, this.x, this.y, this.radius);
@@ -536,12 +536,17 @@ function keyPressed(){
   }
   if (key === 'i' && gameState === "titleScreen"){
     gameState = "instructions";
-    fill(255);
-    rectMode(CENTER);
-    rect(width/2, height/2, width-400, height-100);
+    instructions();
+  }
+  else if (key === 'i' && gameState === "pause"){
+    gameState = "pauseInstructions";
+    instructions();
   }
   else if (key === 'i' && gameState === "instructions"){
     gameState = "titleScreen";
+  }
+  else if (key === 'i' && gameState === "pauseInstructions"){
+    gameState = "game";
   }
 }
 
@@ -578,9 +583,32 @@ function draw() {
     }
   }
   if (gameState === "titleScreen"){
+    person.x = 25;
+    person.y = 875;
+    person.newX = 25;
+    person.newY = 875;
     chosenGroceryList = [];
     title();
   }
+}
+
+function instructions(){
+  fill(255);
+  rectMode(CENTER);
+  rect(width/2, height/2, width-400, height-100);
+  textSize(100);
+  fill(0);
+  text("INSTRUCTIONS", width/2, height/2-300);
+  textSize(50);
+  text("Use WASD to move. Use 'e' to interact when the prompt appears.", width/2, height/2-200);
+  text("Hold 'f' to view your basket. Hold SPACE to see your grocery list.", width/2, height/2-100);
+  text("Press ESC to open the menu. If you get stuck, open the menu.", width/2, height/2);
+  textSize(60);
+  text("FIND EVERYTHING ON YOUR LIST.", width/2, height/2+100);
+  textSize(130);
+  text("GOOD LUCK.", width/2, height/2+300);
+  textSize(25);
+  text("Press 'i' to close the instructions.", width/2, height/2+400);
 }
 
 function mouseMoved(){
@@ -613,8 +641,6 @@ function wordsOnList(){
   let listHeight = 200;
   let division = 100;
   fill(0);
-  if (inventory[0] )
-    fill(255);
   for (let i = 0; i < chosenGroceryList.length; i++){
     text("- " + chosenGroceryList[i], width/2, height/2-listHeight);
     listHeight = listHeight - division;
@@ -675,11 +701,29 @@ function viewCart(){
   fill(	255, 133, 161);
   rect(width-700, height/2-100, 500, 500);
 
+  textAlign(CORNER);
   textSize(50);
   fill(0);
   if (inventory.length === 1){
     text("-" + inventory[0], width-600, height/2);
   }
+  else if (inventory.length === 2){
+    text("-" + inventory[0], width-600, height/2);
+    text("-" + inventory[1], width-600, height/2+100);
+  }
+  else if (inventory.length === 3){
+    text("-" + inventory[0], width-600, height/2);
+    text("-" + inventory[1], width-600, height/2+100);
+    text("-" + inventory[2], width-600, height/2+200);
+  }
+  else if (inventory.length === 4){
+    text("-" + inventory[0], width-600, height/2);
+    text("-" + inventory[1], width-600, height/2+100);
+    text("-" + inventory[2], width-600, height/2+200);
+    text("-" + inventory[3], width-600, height/2+300);
+  }
+  fill(0);
+  textAlign(CENTER);
 }
 
 function title(){
@@ -709,9 +753,8 @@ function mousePressed(){
     person.x = 25;
     person.y = 875;
   }
-  if (gameState === "pause" && mouseX > width/2-160-275 && mouseX < width/2-160+275 && mouseY > height/2+50 && mouseY < height/2+150){
+  if (gameState === "pause" && mouseX > width/2-300 && mouseX < width/2+300 && mouseY > height/2+50 && mouseY < height/2+150){
     gameState = "titleScreen";
-    clear();
     title();
   }
 }
@@ -734,14 +777,13 @@ function menu(){
   fill(255);
   rect(width/2-160, height/2-25, 275, 100);
   rect(width/2+160, height/2-25, 275, 100);
-  rect(width/2-160, height/2+100, 275, 100);
-  rect(width/2+160, height/2+100, 275, 100);
+  rect(width/2, height/2+100, 600, 100);
   fill(0);
   text("MENU", width/2, height/2-115);
   textAlign(CENTER);
   textSize(30);
   text("I'M STUCK!!", width/2-160, height/2-15);
-  text("INSTRUCTIONS", width/2+160, height/2-15);
-  text("BACK TO HOME", width/2-160, height/2+110);
-  text("INSTRUCTIONS", width/2+160, height/2-15);
+  text("PRESS 'I' FOR", width/2+160, height/2-30);
+  text("INSTRUCTIONS", width/2+160, height/2);
+  text("BACK TO HOME", width/2, height/2+110);
 }
