@@ -263,6 +263,7 @@ class Player{
     fill(0, 0, 0, 0);
     textSize(30);
 
+    //UI collisions
     if (hitOrange === true && !hitApple){
       hitting = true;
       itemHit.push("oranges");
@@ -459,7 +460,6 @@ class Player{
       itemHit = [];
       interact = false;
       hitting = false;
-      colliding = false;
     }
     stroke(0);
   }
@@ -673,7 +673,7 @@ function viewCart(){
   fill(	255, 133, 161);
   rect(width-700, height/2-100, 500, 500);
 
-  textAlign(CORNER);
+  textAlign(LEFT);
   textSize(50);
   fill(0);
   //if # of items in inventory, # of item names appear on "has" list
