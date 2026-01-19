@@ -1,5 +1,7 @@
 # Final Project Proposal
 
+(A ♥ means it's completed)
+
 ## Description
 - A simple grocery store shopping game
 
