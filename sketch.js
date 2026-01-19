@@ -1,11 +1,10 @@
-// Grocery Store Game
+// Sadie Kuzyk (McConnell)
+// CS30 Capstone Project
+// January 19th, 2026
 
-//TO DO
-//2. Simplify code/ tidy
-//3. More shelving images
-//4. Make a game ending
-
+//preloading images, sounds, and font
 function preload(){
+  //misc images
   floorImg = loadImage("Drawings/floor.jpg");
   walkTowards = loadImage("walkingAnimations/walkTowards.gif");
   walkBack = loadImage("walkingAnimations/walkBack.gif");
@@ -14,6 +13,7 @@ function preload(){
   idle = loadImage("walkingAnimations/idleAnimation.gif");
   basket = loadImage("Drawings/shoppingbasket.png");
 
+  //produce images
   prodBin = loadImage("Drawings/produce-bin.png");
   prodApple = loadImage("Drawings/produce-apples.png");
   prodBanana = loadImage("Drawings/produce-bananas.png");
@@ -25,15 +25,14 @@ function preload(){
   prodLettuce = loadImage("Drawings/produce-lettuce.png");
   prodCarrots = loadImage("Drawings/produce-carrots.png");
 
-  meatFish = loadImage("Drawings/meat-fish.png");
-  meatGroundBeef = loadImage("Drawings/meat-groundbeef.png");
-
+  //frozen items images
   frozenPizza = loadImage("Drawings/frozen-pizza.png");
   frozenIceCream = loadImage("Drawings/frozen-icecream.png");
   frozenPizzaPops = loadImage("Drawings/frozen-pizzapops.png");
   frozenVeggies = loadImage("Drawings/frozen-veggies.png");
   frozenFruit = loadImage("Drawings/frozen-fruit.png");
 
+  //dry goods images
   dryCereal = loadImage("Drawings/dry-cereal.png");
   dryCookies = loadImage("Drawings/dry-cookies.png");
   dryPasta = loadImage("Drawings/dry-pasta.png");
@@ -43,11 +42,12 @@ function preload(){
   drySugar = loadImage("Drawings/dry-sugar.png");
   dryCrackers = loadImage("Drawings/dry-crackers.png");
 
+  //sounds
   pickedUp = loadSound("Audios/pickedUp.wav");
   gameMusic = loadSound("Audios/musics/titleScreen/Music_Loop_3_Full.wav");
   walking = loadSound("Audios/walkingslowed.wav");
 
-
+  //font
   font = loadFont("Funzytoon.ttf");
 }
 
@@ -103,6 +103,7 @@ let hitDry3 = false;
 let hitProduce1 = false;
 let hitProduce2 = false;
 
+// departments so one item from each department is on the list
 let departments = {
   produce: ["apples", "bananas", "oranges", "potatoes", "tomatoes", "onions", "bell peppers", "lettuce", "carrots"],
   freezer: ["frozen pizza", "ice cream", "pizza pops", "frozen veggies", "frozen fruit"],
@@ -118,8 +119,6 @@ let items;
 let itemHit = [];
 let interact = false;
 let hitting = false;
-let colliding = false;
-let UIhit = false;
 let gameState = "titleScreen";
 let movementState;
 
@@ -137,58 +136,59 @@ class Player{
     noStroke();
     imageMode(CENTER);
     
-    //w
+    //move forward
     if (keyIsDown(87) && this.y > 0 + this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
-      if (colliding){
+      if (hitting){
         this.y = this.newY;
         this.x = this.newX;
       }
-      else if (!colliding){
+      else if (!hitting){
         this.newY = this.y;
         this.y -= this.speed;
         movementState = true;
       }
       image(walkBack, this.x, this.y, 75, 100);
     }
-    //a
+    //move left
     if (keyIsDown(65) && this.x > this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
-      if (colliding){
+      if (hitting){
         this.x = this.newX;
         this.y = this.newY;
       }
-      else if (!colliding){
+      else if (!hitting){
         this.newX = this.x;
         this.x -= this.speed;
         movementState = true;
       }
       image(walkLeft, this.x, this.y);
     }
-    //s
+    //move down
     if (keyIsDown(83) && this.y < height-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
-      if (colliding){
+      if (hitting){
         this.y = this.newY;
         this.x = this.newX;
       }
-      else if (!colliding){
+      else if (!hitting){
         this.newY = this.y;
         this.y += this.speed;
         movementState = true;
       }
       image(walkTowards, this.x, this.y, 75, 100);
     }
-    //d
+    //move right
     if (keyIsDown(68) && this.x < width-this.radius/2 && !keyIsDown(32) && !keyIsDown(70)){
-      if (colliding){
+      if (hitting){
         this.x = this.newX;
         this.y = this.newY;
       }
-      else if (!colliding){
+      else if (!hitting){
         this.newX = this.x;
         this.x += this.speed;
         movementState = true;
       }
       image(walkRight, this.x, this.y);
     }
+    //open grocery list
     if (keyIsDown(32) && !keyIsDown(70)){
       image(idle, this.x, this.y);
       stroke(0);
@@ -198,10 +198,12 @@ class Player{
       noStroke();
       wordsOnList();
     }
+    //open basket view
     if (keyIsDown(70) && !keyIsDown(32)){
       image(idle, this.x, this.y);
       viewCart();
     }
+    //idle animation detection
     else if (!keyIsDown(87) && !keyIsDown(65) && !keyIsDown(83) && !keyIsDown(68)){
       image(idle, this.x, this.y);
       movementState = false;
@@ -217,9 +219,9 @@ class Player{
     circle(this.x, this.y, 50);
 
     //PRODUCE COLLISION
-    hitOrange = collideRectCircle(width-500, 650, 100, 100, this.x, this.y, this.radius);
-    hitApple = collideRectCircle(width-400, 650, 100, 100, this.x, this.y, this.radius);
-    hitBanana = collideRectCircle(width-300, 650, 100, 100, this.x, this.y, this.radius);
+    hitOrange = collideRectCircle(width-500, 625, 100, 100, this.x, this.y, this.radius);
+    hitApple = collideRectCircle(width-400, 625, 100, 100, this.x, this.y, this.radius);
+    hitBanana = collideRectCircle(width-300, 625, 100, 100, this.x, this.y, this.radius);
     hitPotato = collideRectCircle(width-700, height-100, 115, 100, this.x, this.y, this.radius);
     hitOnion = collideRectCircle(width-600, height-100, 100, 100, this.x, this.y, this.radius);
     hitPepper = collideRectCircle(width-500, height-100, 100, 100, this.x, this.y, this.radius);
@@ -258,245 +260,198 @@ class Player{
     hitMilk = collideRectCircle(width-100, 754/5*3, 100, 754/5, this.x, this.y, this.radius);
     hitYogurt = collideRectCircle(width-100, 754/5*4, 100, 754/5, this.x, this.y, this.radius);
 
-    //SHELVING COLLISION
-    rectMode(CORNER);
-    hitFrozen = collideRectCircle(0, 0, width/6*5, 100, this.x, this.y, this.radius);
-    hitMeat = collideRectCircle(0, height/2-200, 100, 500, this.x, this.y, this.radius);
-    hitDairy = collideRectCircle(width-100, 0, 100, height/5*4, this.x, this.y, this.radius);
-    hitDry1 = collideRectCircle(300, 225, 1350, 100, this.x, this.y, this.radius);
-    hitDry2 = collideRectCircle(300, 450, 1350, 100, this.x, this.y, this.radius);
-    hitDry3 = collideRectCircle(300, 650, 1000, 100, this.x, this.y, this.radius);
-    hitProduce1 = collideRectCircle(width-500, 650, 500, 100, this.x, this.y, this.radius);
-    hitProduce2 = collideRectCircle(width-700, height-100, 700, 100, this.x, this.y, this.radius);
-
     fill(0, 0, 0, 0);
     textSize(30);
-    if (hitFrozen || hitMeat || hitDairy || hitDry1 || hitDry2 || hitDry3 || hitProduce1 || hitProduce2){
-      colliding = true;
-    }
 
     if (hitOrange === true && !hitApple){
       hitting = true;
       itemHit.push("oranges");
-      fill(25);
-      rect(width-525, 625, 125, 150);
       interactionUI();
       return itemHit;
     }
     if (hitApple === true && !hitBanana && !hitOrange){
       hitting = true;
       itemHit.push("apples");
-      rect(width-400, 650, 100, 100);
       interactionUI();
       return itemHit;
     }
     if (hitBanana === true && !hitApple){
       hitting = true;
       itemHit.push("bananas");
-      rect(width-300, 650, 100, 100);
       interactionUI();
       return itemHit;
     }
     if (hitPotato === true){
       hitting = true;
       itemHit.push("potatoes");
-      rect(width-700, height-100, 100, 100);
       interactionUI();
       return itemHit;
     }
     if (hitOnion === true && !hitPotato){
       hitting = true;
       itemHit.push("onions");
-      rect(width-600, height-100, 100, 100);
       interactionUI();
       return itemHit;
     }
     if (hitPepper === true && !hitOnion){
       hitting = true;
       itemHit.push("bell peppers");
-      rect(width-500, height-100, 100, 100);
       interactionUI();
       return itemHit;
     }
     if (hitLettuce === true && !hitPepper){
       hitting = true;
       itemHit.push("lettuce");
-      rect(width-400, height-100, 100, 100);
       interactionUI();
       return itemHit;
     }
     if (hitTomato === true && !hitLettuce){
       hitting = true;
       itemHit.push("tomatoes");
-      rect(width-300, height-100, 100, 100);
       interactionUI();
       return itemHit;
     }
     if (hitCarrot === true && !hitTomato){
       hitting = true;
       itemHit.push("carrots");
-      rect(width-200, height-100, 100, 100);
       interactionUI();
       return itemHit;
     }
     if (hitShrimp === true && !hitBacon){
       hitting = true;
       itemHit.push("shrimp");
-      rect(0, height/2-200, 100, 100);
       interactionUI();
       return itemHit;
     }
     if (hitBacon === true && !hitShrimp && !hitGroundBeef){
       hitting = true;
       itemHit.push("bacon");
-      rect(0, height/2-100, 100, 100);
       interactionUI();
       return itemHit;
     }
     if (hitGroundBeef === true && !hitBacon && !hitSausages){
       hitting = true;
       itemHit.push("ground beef");
-      rect(0, height/2, 100, 100);
       interactionUI();
       return itemHit;
     }
     if (hitSausages === true && !hitGroundBeef && !hitFish){
       hitting = true;
       itemHit.push("sausages");
-      rect(0, height/2+100, 100, 100);
       interactionUI();
       return itemHit;
     }
     if (hitFish === true && !hitSausages){
       hitting = true;
       itemHit.push("fish");
-      rect(0, height/2+200, 100, 100);
       interactionUI();
       return itemHit;
     }
     if (hitFrozenPizza === true && !hitIceCream){
       hitting = true;
       itemHit.push("frozen pizza");
-      rect(0, 0, width/6, 100);
       interactionUI();
       return itemHit;
     }
     if (hitIceCream === true && !hitFrozenPizza && !hitPizzaPops){
       hitting = true;
       itemHit.push("ice cream");
-      rect(width/6, 0, width/6, 100);
       interactionUI();
       return itemHit;
     }
     if (hitPizzaPops === true && !hitIceCream && !hitFrozenVeggies){
       hitting = true;
       itemHit.push("pizza pops");
-      rect(width/6*2, 0, width/6, 100);
       interactionUI();
       return itemHit;
     }
     if (hitFrozenVeggies === true && !hitPizzaPops && !hitFrozenFruit){
       hitting = true;
       itemHit.push("frozen veggies");
-      rect(width/6*3, 0, width/6, 100);
       interactionUI();
       return itemHit;
     }
     if (hitFrozenFruit === true && !hitFrozenVeggies){
       hitting = true;
       itemHit.push("frozen fruit");
-      rect(width/6*4, 0, width/6, 100);
       interactionUI();
       return itemHit;
     }
     if (hitCereal === true && !hitCookies){
       hitting = true;
       itemHit.push("cereal");
-      rect(300, 225, 450, 100);
       interactionUI();
       return itemHit;
     }
     if (hitCookies === true && !hitCereal && !hitPasta){
       hitting = true;
       itemHit.push("cookies");
-      rect(750, 225, 450, 100);
       interactionUI();
       return itemHit;
     }
     if (hitPasta === true && !hitCookies && !hitChips){
       hitting = true;
       itemHit.push("pasta");
-      rect(1200, 225, 450, 100);
       interactionUI();
       return itemHit;
     }
     if (hitChips === true && !hitPasta && !hitSoup){
       hitting = true;
       itemHit.push("chips");
-      rect(300, 450, 450, 100);
       interactionUI();
       return itemHit;
     }
     if (hitSoup === true && !hitChips && !hitFlour){
       hitting = true;
       itemHit.push("soup");
-      rect(750, 450, 450, 100);
       interactionUI();
       return itemHit;
     }
     if (hitFlour === true && !hitSoup && !hitSugar){
       hitting = true;
       itemHit.push("flour");
-      rect(1200, 450, 450, 100);
       interactionUI();
       return itemHit;
     }
     if (hitSugar === true && !hitFlour && !hitCrackers){
       hitting = true;
       itemHit.push("sugar");
-      rect(300, 650, 500, 100);
       interactionUI();
       return itemHit;
     }
     if (hitCrackers === true && !hitSugar){
       hitting = true;
       itemHit.push("crackers");
-      rect(800, 650, 500, 100);
       interactionUI();
       return itemHit;
     }
     if (hitButter === true && !hitCheese){
       hitting = true;
       itemHit.push("butter");
-      rect(width-100, 0, 100, 754/5);
       interactionUI();
       return itemHit;
     }
     if (hitCheese === true && !hitButter && !hitEggs){
       hitting = true;
       itemHit.push("cheese");
-      rect(width-100, 754/5, 100, 754/5);
       interactionUI();
       return itemHit;
     }
     if (hitEggs === true && !hitCheese && !hitMilk){
       hitting = true;
       itemHit.push("eggs");
-      rect(width-100, 754/5*2, 100, 754/5);
       interactionUI();
       return itemHit;
     }
     if (hitMilk === true && !hitEggs && !hitYogurt){
       hitting = true;
       itemHit.push("milk");
-      rect(width-100, 754/5*3, 100, 754/5);
       interactionUI();
       return itemHit;
     }
     if (hitYogurt === true && !hitMilk){
       hitting = true;
       itemHit.push("yogurt");
-      rect(width-100, 754/5*4, 100, 754/5);
       interactionUI();
       return itemHit;
     }
@@ -510,6 +465,7 @@ class Player{
   }
 }
 
+//adds the "press e for..."
 function interactionUI(){
   textFont(font);
   fill(0);
@@ -519,6 +475,7 @@ function interactionUI(){
 }
 
 function keyPressed(){
+  //pick up code
   if (key === 'e' && hitting === true){
     for (let item = 0; item < chosenGroceryList.length; item++){
       if (itemHit[0] === chosenGroceryList[item] && inventory[0] !== itemHit[0] && inventory[1] !== itemHit[0] && inventory[2] !== itemHit[0] && inventory[3] !== itemHit[0] && inventory[4] !== itemHit[0]){
@@ -527,26 +484,37 @@ function keyPressed(){
       }
     }
   }
+  //press esc for menu
   if (keyCode === 27 && gameState === "game"){
     gameState = "pause";
     menu();
   }
+  //if menu, go back to game
   else if (keyCode === 27 && gameState === "pause"){
     gameState = "game";
   }
+  //press i for instructions title screen
   if (key === 'i' && gameState === "titleScreen"){
     gameState = "instructions";
     instructions();
   }
+  //in menu instructions
   else if (key === 'i' && gameState === "pause"){
     gameState = "pauseInstructions";
     instructions();
   }
+  // if instructions, go back to menu
   else if (key === 'i' && gameState === "instructions"){
     gameState = "titleScreen";
   }
+  // if instructions, go back to game
   else if (key === 'i' && gameState === "pauseInstructions"){
     gameState = "game";
+  }
+  // goes home if beat game
+  if (key === 'h' && gameState === "ending"){
+    gameState = "titleScreen";
+    title();
   }
 }
 
@@ -561,10 +529,11 @@ function setup() {
 let person = new Player(25, 875, 50);
 
 function draw() {
-  console.log(gameState);
+  // audio when moving
   if (movementState === true && !walking.isPlaying()){
     walking.play();
   }
+  // if in game, add floor images
   if (gameState === "game"){
     image(floorImg, 0, 0,width/4, height/2);
     image(floorImg, width/4, 0, width/4, height/2);
@@ -582,6 +551,7 @@ function draw() {
       ending();
     }
   }
+  //title screen resets everything
   if (gameState === "titleScreen"){
     person.x = 25;
     person.y = 875;
@@ -592,6 +562,7 @@ function draw() {
   }
 }
 
+//instructions
 function instructions(){
   fill(255);
   rectMode(CENTER);
@@ -611,6 +582,7 @@ function instructions(){
   text("Press 'i' to close the instructions.", width/2, height/2+400);
 }
 
+// when user moves mouse, start music
 function mouseMoved(){
   if (gameState === "titleScreen"){
     userStartAudio();
@@ -679,7 +651,6 @@ function shelving(){
   image(drySugar, 300, 650, 500);
   image(dryCrackers, 800, 650, 500);
   //green shelves = produce
-  fill(221, 229, 182);
   image(prodPotatoes, width-700, height-100);
   image(prodOnions, width-600, height-100);
   image(prodBellPeppers, width-500, height-100);
@@ -693,6 +664,7 @@ function shelving(){
 }
 
 function viewCart(){
+  //basket image
   background(255);
   image(basket, width/2-400, height/2+150);
   textSize(100);
@@ -704,6 +676,7 @@ function viewCart(){
   textAlign(CORNER);
   textSize(50);
   fill(0);
+  //if # of items in inventory, # of item names appear on "has" list
   if (inventory.length === 1){
     text("-" + inventory[0], width-600, height/2);
   }
@@ -726,6 +699,7 @@ function viewCart(){
   textAlign(CENTER);
 }
 
+//title/ main home screen
 function title(){
   inventory = [];
   textFont(font);
@@ -744,6 +718,7 @@ function title(){
   text("Press 'i' for instructions", width/2, height/2+100);
 }
 
+//all buttons
 function mousePressed(){
   if (gameState === "titleScreen" && mouseX > width/2-200 && mouseX < width/2+200 && mouseY < height/2+height/4+100 && mouseY > height/2+height/4-100){
     randomGroceryList();
@@ -759,13 +734,18 @@ function mousePressed(){
   }
 }
 
+//lame winner screen
 function ending(){
   clear();
   background(255, 229, 144);
   textSize(100);
   text("CONGRATULATIONS!!", width/2, height/2-200);
+  textSize(75);
+  text("YOU WON!", width/2, height/2);
+  text("PRESS 'H' TO GO BACK TO THE HOME SCREEN", width/2, height/2+200);
 }
 
+//pause menu when pressed esc
 function menu(){
   textFont(font);
   rectMode(CENTER);
